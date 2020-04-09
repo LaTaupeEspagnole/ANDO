@@ -1,0 +1,1026 @@
+\documentclass[a4paper, 12pt]{article}
+
+% === Packages ===
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage[french]{babel}
+\usepackage{libertine}
+\usepackage[pdftex]{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage[OT1]{fontenc}
+\usepackage[sfdefault,light,condensed]{roboto} % Font
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{array,multirow,makecell}
+\usepackage{datetime}
+\usepackage{xcolor}
+\usepackage{lastpage}
+\usepackage{float}
+\usepackage{tcolorbox}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathabx}
+
+\usepackage{tabularx}
+
+\usepackage{url}
+% === End Packages ===
+
+\geometry{a4paper}
+%\geometry{top=2cm, bottom=2cm, left=2cm, right=2cm}
+
+\renewcommand{\contentsname}{Sommaire}
+\renewcommand{\baselinestretch}{1}
+%\renewcommand{\thepage}{}
+
+% === Variables  ===
+\newcommand{\nomcours}{ANDO - Analyse de données}
+\newcommand{\nomprofesseur}{Regragui Mohamed}
+\newcommand{\nomauteur}{Sébastien Goubeau}
+% === End Variables ===
+
+% === Commandes ===
+\newtcolorbox{note}[1]{colback=green!5!white,colframe=green!65!black,fonttitle=\bfseries,title=#1}
+\newtcolorbox{definition}[1]{colback=white,colframe=gray,fonttitle=\bfseries,title=#1}
+\newtcolorbox{remarque}[1]{colback=green!5!white,colframe=green!65!black,fonttitle=\bfseries,title=#1}
+\newtcolorbox{info}[1]{colback=white,colframe=blue!60!white,fonttitle=\bfseries,title=#1}
+\newtcolorbox{rappel}[1]{colback=white,colframe=red!60!white,fonttitle=\bfseries,title=#1}
+% === End Commandes ===
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\nomcours}
+\rhead{\nomprofesseur}
+\rfoot{Page \thepage{} / \pageref{LastPage}}
+\cfoot{\date{\today}}
+
+\begin{document}
+
+\title{
+\vspace{130pt}
+\begin{centering}
+\bigskip
+\bigskip
+\Huge {\textbf{\nomcours\\}}
+\bigskip
+\large{\textbf{Professeur} : \nomprofesseur \\ \textbf{Cours de} : \nomauteur}
+\date{\today}
+\end{centering}
+}
+\maketitle
+\thispagestyle{empty}
+\clearpage
+
+\tableofcontents
+\clearpage
+
+\section{Description bidimensionnelle et mesure de corrélation}
+\subsection{Loi conjointe de $\mathcal{X, Y}$}
+Soient $\mathcal{X}$ et $\mathcal{Y}$ deux variables aléatoires discrètes définis sur le même espace probabilisé : ($\Omega{}, \varphi{}, P$).\\
+Avec :
+\begin{itemize}
+\item $\Omega$ : Univers
+\item $\varphi$ : Tribu (classe des évènements)
+\item $P$ : Loi de définition restreinte
+\end{itemize}
+
+\begin{flushleft}
+$\mathcal{X}(\Omega) = \{ x_i / i \in \mathcal{I} \}$ valeurs de $\mathcal{X}$\\
+$\mathcal{Y}(\Omega) = \{ y_j / j \in \mathcal{J} \}$ valeurs de $\mathcal{Y}$
+\end{flushleft}
+
+\begin{definition}{Définition - Loi conjointe}
+On appelle loi conjointe du couple ($\mathcal{X, Y}$) l'ensemble des couples ($x_i, y_j, P_{ij}$) où $x_i \in \mathcal{X}(\Omega), y_i \in \mathcal{Y}(\Omega)$\\
+$P_{ij} = P ( (\mathcal{X} = x_i) \cap (\mathcal{Y} = y_j) )$
+\end{definition}
+
+\begin{remarque}{Remarque}
+Si $\mathcal{I} = \ldbrack 1, r \rdbrack $ et $\mathcal{J} = \ldbrack 1, s \rdbrack$
+{\Large
+\begin{center}
+\begin{tabular}{|c|ccccc|}
+	\hline
+	$\mathcal{X/Y}$ & $y_1$ & ...  & $y_j$ & ... & $y_s$ \\
+	\hline
+	$x_1$ &  &  & : &  & \\
+	... &  &  & : &  & \\
+	$x_i$ & ... & ... & $P_{ij}$ & ... & ...\\
+	... &  &  & : &  & \\
+	$x_r$ &  &  & : &  & \\
+	\hline
+\end{tabular}\\
+\end{center}
+}
+$P_{ij} = P ( (\mathcal{X} = x_i) \cap (\mathcal{Y} = y_j) )$\\
+$P_{ij} \geq 0$\\
+$\sum_{i, j} P_{ij} = 1$\\
+\end{remarque}
+
+
+\subsection{Loi marginale}
+\begin{definition}{Définition - Loi marginale}
+Les variables $\mathcal{X}$ et $\mathcal{Y}$ sont appelé variables marginales.\\
+$P (X = x_i) = \sum_{j \in \mathcal{J}} P_{ij} = \sum_{j \in \mathcal{J}} P ( (\mathcal{X} = x_i) \cap (\mathcal{Y} = y_j) )$\\
+$P_{\forall j} (\mathcal{X} = x_i) = \sum_{j \in \mathcal{J}} P_{ij} = P_{i \bullet}$ (Notation statistique de la loi marginale)\\
+$P_{\forall i} (\mathcal{Y} = y_j) = \sum_{i \in \mathcal{I}} P_{ij} = P_{\bullet j}$ (Notation statistique de la loi marginale)\\
+\end{definition}
+
+\subsubsection*{Exemple}
+{\Large
+\begin{center}
+\begin{tabular}{|c|cccc|c|}
+	\hline
+	$\mathcal{X/Y}$ & 1 & 2  & 3 & 4 & $P_{i\bullet}$ \\
+	\hline
+	1 & $\frac{1}{16}$ & $\frac{1}{16}$ & $\frac{1}{16}$ & $\frac{1}{16}$ & $\frac{1}{4}$ \\
+	2 & 0 & $\frac{2}{16}$ & $\frac{1}{16}$ & $\frac{1}{16}$ & $\frac{1}{4}$ \\
+	3 & 0 & 0 & $\frac{3}{16}$ & $\frac{1}{16}$ & $\frac{1}{4}$ \\
+	4 & 0 & 0 & 0 & $\frac{4}{16}$ & $\frac{1}{4}$ \\
+	\hline
+	$P_{\bullet j}$ & $\frac{1}{16}$ & $\frac{3}{16}$ & $\frac{5}{16}$ & $\frac{7}{16}$ & 1 \\
+	\hline
+\end{tabular}\\
+\end{center}
+}
+\begin{flushleft}
+$P (\mathcal{X} = 4) = \frac{1}{4}$\\
+$P (\mathcal{Y} = 3) = \frac{5}{16}$\\
+\end{flushleft}
+
+Le 1 en bas à droite du tableau permet de vérifier que les calcules sont bon (la valeur doit toujours être à 1).
+
+
+\subsection{Loi conditionnelle}
+\begin{definition}{Définition - Loi Conditionnelle}
+On appelle loi conditionnelle de $\mathcal{X} = x_i$ sachant $\mathcal{Y} = y_j$ : \\
+$P (\mathcal{X} = x_i / \mathcal{Y} = y_i) = \frac{P ((\mathcal{X} = x_i) \cap (\mathcal{Y} = y_j))}{P (\mathcal{Y} = y_j)} = \frac{P_{ij}}{P_{\bullet j}}$ \\
+$P (\mathcal{Y} = y_j / \mathcal{X} = x_i) = \frac{P_{ij}}{P_{i \bullet}}$ \\
+\end{definition}
+
+
+\subsubsection*{Exemple}
+On reprend le tableau de l'exemple précédent.\\
+$P (\mathcal{X} = 1 / \mathcal{Y} = 3) = \frac{P((\mathcal{X} = 1) \cap (\mathcal{Y} = 3)}{P (\mathcal{Y} = 3)} = \frac{\frac{1}{16}}{\frac{5}{16}} = \frac{1}{5}$\\
+
+On peut s'aider d'un tableau :
+
+{\Large
+\begin{center}
+\begin{tabular}{c|cccc}
+	$x_i$ & 1 & 2  & 3 & 4 \\
+	\hline
+	$P (\mathcal{X} / \mathcal{Y} = 3)$ & $\frac{1}{5}$ & $\frac{1}{5}$ & $\frac{3}{5}$ & 0
+\end{tabular}\\
+\end{center}
+}
+
+\begin{definition}{Définition - Indépendance}
+$\mathcal{X}$ et $\mathcal{Y}$ sont indépendant si et seulement si :\\
+$P ((\mathcal{X}) = x) \cap (\mathcal{Y} = y)) = P (\mathcal{X}) = x) P(\mathcal{Y} = y))$\\
+$\Leftrightarrow P_{ij} = P_{i \bullet} \times P_{\bullet j}$ ($\forall (ij) \in \mathcal{I} \times \mathcal{J}$)\\
+$\Leftrightarrow P (\mathcal{X} = x / \mathcal{Y} = y) = P (\mathcal{X} = x)$
+\end{definition}
+
+
+
+\subsection{Loi d'une fonction de 2 variables ($\mathcal{Z} = g(\mathcal{X}, \mathcal{Y})$) (Loi composé)}
+Soit $g: \mathbb{R}^2 \longrightarrow \mathbb{R}$ définit sur l'ensemble des valeurs prises par $\mathcal{X}$ et $\mathcal{Y}$.\\
+$\mathcal{Z} = g(\mathcal{X}, \mathcal{Y})$\\
+\begin{center}
+$(\mathcal{Z} = zk) = \underset{(i, j) | g (x_i, y_i) = zk}{\cup} ((\mathcal{X} = x_i) \cap (\mathcal{Y} = y_i))$
+\end{center}
+
+\begin{remarque}{Remarque}
+L'expression ci-dessus signifie en français :\\
+\emph{L'événement $(\mathcal{Z} = zk)$ (symbolisé par des parenthèses) est égale à l'union des $(\mathcal{X} = x_i) \cap (\mathcal{Y} = y_i)$ qui vérifie le couple $(i, j)$ tel que $g (x_i, y_i) = zk$}.
+\end{remarque}
+
+\begin{center}
+$\boxed{P (\mathcal{Z} = zk) = \underset{(i, j) | g (x_i, y_i) = zk}{\sum} P ((\mathcal{X} = x_i) \cap (\mathcal{Y} = y_i))}$
+\end{center}
+
+\begin{flushleft}
+En particulier $g: (\mathcal{X, Y}) = \mathcal{X} + \mathcal{Y} = \mathcal{S}$\\
+$P (\mathcal{S} = s) = \underset{(i, j) | x_i + y_j = s_k}{\sum} P ((\mathcal{X} = x_i) \cap (\mathcal{Y} = y_j))$
+\end{flushleft}
+
+
+
+\subsubsection*{Exemple}
+Reprise de l'exemple précédent.\\
+$\mathcal{S = X + Y}$\\
+$\mathbb{P} = \mathcal{X . Y}$\\
+Loi de $\mathcal{S}$
+
+{\Large
+\begin{center}
+\begin{tabular}{c|ccccccc}
+	$sk$ & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+	\hline
+	$P (\mathcal{S} = sk)$ & $\frac{1}{16}$ & $\frac{1}{16}$ & $\frac{3}{16}$ & $\frac{2}{16}$ &  $\frac{4}{16}$ & $\frac{1}{16}$ & $\frac{4}{16}$ \\
+\end{tabular}\\
+\end{center}
+}
+
+Pour remplire le tableau : $P (\mathcal{S} = 5) = P_{1, 4} + P_{2, 3} + P_{3, 2} + P_{4, 1} = \frac{2}{16} = \frac{1}{8}$
+
+Loi du produit $\mathbb{P} = \mathcal{X . Y}$
+
+{\Large
+\begin{center}
+\begin{tabular}{c|ccccccccc}
+	$\mathbb{P}_i$ & 1 & 2 & 3 & 4 & 6 & 8 & 9 & 12 & 16 \\
+	\hline
+	$P (\mathbb{P} = \mathbb{P}_i)$ & $\frac{1}{16}$ & $\frac{1}{16}$ & $\frac{1}{16}$ & $\frac{3}{16}$ & $\frac{1}{16}$ & $\frac{1}{16}$ & $\frac{3}{16}$ & $\frac{1}{16}$ & $\frac{4}{16}$ \\
+\end{tabular}\\
+\end{center}
+}
+
+La ligne doit être égale à 1.
+
+
+
+\subsection{Espérance de $\mathcal{Z} = g(\mathcal{X, Y})$}
+\begin{definition}{Définition - Espérance d'une Loi composé}
+Soit $\mathcal{Z}$ une loi composé, l'espérance de cette loi est :
+\begin{center}
+$\boxed{E(\mathcal{Z}) = \underset{i, j}{\sum} g(x_i, y_j) P_{ij}}$
+\end{center}
+\end{definition}
+
+\begin{remarque}{Remarque}
+Si $\mathcal{X}$ et $\mathcal{Y}$ sont 2 variables indépendantes alors : $E(\mathcal{X, Y}) = E(\mathcal{X}) E(\mathcal{Y})$
+\end{remarque}
+
+
+
+\subsubsection*{Exemple}
+{\Large
+\begin{center}
+\begin{tabular}{c|ccc|c}
+	$\mathcal{X/Y}$ & 0 & 1 & 2 & $P_{i \bullet}$ \\
+	\hline
+	0 & $\frac{1}{20}$ \tiny{[0]} & $\frac{1}{4}$ \tiny{[0]} & 0 \tiny{[0]} & $\frac{3}{10}$ \tiny{[0]} \\
+	1 & $\frac{17}{16}$ \tiny{[0]} & $\frac{1}{4}$ \tiny{[1]} & $\frac{1}{6}$ \tiny{[2]} & $\frac{7}{10}$ \tiny{[1]} \\
+	\hline
+	$P_{\bullet j}$ & $\frac{1}{3}$ \tiny{[0]} & $\frac{1}{2}$ \tiny{[1]} & $\frac{1}{6}$ \tiny{[2]} & 1\\
+\end{tabular}\\
+\end{center}
+}
+
+\begin{info}{Information}
+Les indices entre crochet ("[0]") dans le tableau représente $i \times j$ (le nombre de la colonne fois celui de la ligne).\\
+\textbf{Exemple :}
+\begin{itemize}
+\item colonne 0 ligne 0 (case $\frac{1}{20}$) : $0 \times 0 = 0$
+\item colonne 1 ligne 2 (case $\frac{1}{6}$) : $1 \times 2 = 2$
+\end{itemize}
+\end{info}
+
+\begin{flushleft}
+\begin{tabular}{l|l}
+$
+\begin{aligned}
+E (\mathcal{X . Y}) &= \overset{1}{\underset{i = 0}{\sum}} \overset{2}{\underset{j = 0}{\sum}} = i \times j \times P_{ij} \\
+&= \frac{1}{4} \times 1 + \frac{1}{6} \times 2 \\
+&\boxed{= \frac{7}{12}}
+\end{aligned}
+$ &
+$
+\begin{aligned}
+E (\mathcal{X}) &= \frac{7}{10} \times 1 \\
+&\boxed{= \frac{7}{10}}
+\end{aligned}
+$ \\
+&
+$
+\begin{aligned}
+E (\mathcal{Y}) &= \frac{1}{2} \times 1 + \frac{1}{6} \times 2
+&\boxed{= \frac{5}{6}}
+\end{aligned}
+$
+\end{tabular}\\
+
+\textbf{Vérification :} $E (\mathcal{X . Y}) = E (\mathcal{X}) E (\mathcal{Y})$\\
+$\frac{7}{12} = \frac{7}{10} \times \frac{5}{6}$ \textbf{OK} \checkmark\\
+\textbf{Mais :}\\
+$
+\begin{aligned}
+P ((\mathcal{X} = 0) \cap (\mathcal{Y} = 2)) = 0 \ne P (\mathcal{X} = 0) . P (\mathcal{Y} = 2) &= \frac{3}{10} \times \frac{1}{6} \\
+&= \frac{1}{20}
+\end{aligned}
+$\\
+\textbf{$\Rightarrow \mathcal{X}$ et $\mathcal{Y}$ ne sont pas indépendants.}
+\end{flushleft}
+
+
+\begin{rappel}{Rappel}
+$
+\begin{aligned}
+E (\mathcal{X}) &= \underset{i \in \mathcal{I}}{\sum} x_i P (\mathcal{X} = x_i) \\
+&= 0 \times \frac{3}{10} + 1 \times \frac{7}{10} \\
+&= \frac{7}{10}
+\end{aligned}
+$
+\end{rappel}
+
+
+
+\subsection{Covariance et coefficient de corrélation linéaire}
+\begin{definition}{Définition - Covariance d'un couple $(\mathcal{X, Y})$}
+On appelle covariance du couple $(\mathcal{X, Y})$ :\\
+$COV(\mathcal{X, Y}) = E(\mathcal{X . Y}) - E (\mathcal{X}) E (\mathcal{Y})$\\
+et le coefficient de corrélation :\\
+$\rho (\mathcal{X, Y}) = \frac{COV (\mathcal{X, Y})}{\sigma_x \sigma_y}$\\
+($\sigma_x = \sqrt{V(\mathcal{X})}$, $\sigma_y = \sqrt{V(\mathcal{Y})}$)
+\end{definition}
+
+\begin{remarque}{Remarque}
+$E$ : espace des v.a. (variables aléatoires)\\
+$\rho$ : rô\\
+$\cos (\theta) = \rho (\mathcal{X, Y}) = \frac{<\mathcal{X} - E (\mathcal{X}), \mathcal{Y} - E (\mathcal{Y})>}{|| \mathcal{X} - E (\mathcal{X}) || \times || \mathcal{Y} - E (\mathcal{Y}) ||}$\\
+$COV (\mathcal{X, Y}) = <\mathcal{X} - E (\mathcal{X}), \mathcal{Y} - E (\mathcal{Y})>$ (produit scalaire)\\
+$|| \mathcal{X} - E (\mathcal{X}) || = \sigma(\mathcal{X})$\\
+$|| \mathcal{Y} - E (\mathcal{Y}) || = \sigma(\mathcal{Y})$\\
+\begin{center}
+\includegraphics[width=0.35\textwidth]{schémas/angle-theta.png}
+\end{center}
+$|\rho| \leq 1$\\
+si $\rho = 1 (\theta = 0 [2\pi]) \Rightarrow$ forte corrélation linéaire\\
+si $\rho = 0 (\theta = \frac{\pi}{2} [\pi]) \Rightarrow$ forte corrélation linéaire\\
+
+\end{remarque}
+
+\subsection{Exercice 1}
+Soit $\mathcal{X}$ v.a. de la loi :\\
+{\Large
+\begin{center}
+\begin{tabular}{c|ccccc}
+	$x_i$ & -2 & -1 & 0 & 1 & 2 \\
+	\hline
+	$P_i$ & $\frac{1}{6}$ & $\frac{1}{4}$ & $\frac{1}{6}$ & $\frac{1}{4}$ & $\frac{1}{6}$ \\
+\end{tabular}\\
+\end{center}
+}
+Soit $\mathcal{Y} = \mathcal{X}^2$
+\subsubsection{Donner la loi du couple $\mathcal{X, Y}$}
+\begin{flushleft}
+$P ((\mathcal{X} = i) \cap (\mathcal{Y} = j)) = 0$ si $j \neq i^2$\\
+$P ((\mathcal{X} = i) \cap (\mathcal{Y} = i^2)) = P (\mathcal{X} = i)$
+\end{flushleft}
+{
+\Large
+\begin{center}
+\begin{tabular}{c|ccc|c}
+	$\mathcal{X/Y}$ & 0 & 1 & 4 & $P_{i \bullet}$ \\
+	\hline
+	-2 & 0 \tiny{[0]} & 0 \tiny{[-2]} & $\frac{1}{6}$ \tiny{[-8]} & $\frac{1}{6}$ \tiny{[-2]} \\
+	-1 & 0 \tiny{[0]} & $\frac{1}{4}$ \tiny{[-1]} & 0 \tiny{[-4]} & $\frac{1}{4}$ \tiny{[-1]} \\
+	0 & $\frac{1}{6}$ \tiny{[0]} & 0 \tiny{[0]} & 0 \tiny{[0]} & $\frac{1}{6}$ \tiny{[0]} \\
+	1 & 0 \tiny{[0]} & $\frac{1}{4}$ \tiny{[1]} & 0 \tiny{[4]} & $\frac{1}{4}$ \tiny{[1]} \\
+	2 & 0 \tiny{[0]} & 0 \tiny{[2]} & $\frac{1}{6}$ \tiny{[8]} & $\frac{1}{6}$ \tiny{[2]} \\
+	\hline
+	$P_{\bullet j}$ & $\frac{1}{6}$ \tiny{[0]} & $\frac{1}{2}$ \tiny{[1]} & $\frac{1}{3}$ \tiny{[4]} & 1 \\
+\end{tabular}\\
+\end{center}
+}
+
+
+\subsubsection{En déduire la loi marginale de $\mathcal{Y}$}
+Loi de $\mathcal{Y} \to$ dernière ligne du tableau
+
+
+\subsubsection{Indépendance et calculer $COV (\mathcal{X, Y})$}
+Contre exemple pour $\mathcal{X} = 0$ et $\mathcal{Y} = 1$.\\
+$P ((\mathcal{X} = 0) (\mathcal{Y} = 1)) = 0 \neq P (\mathcal{X} = 0) . P (\mathcal{Y} = 1)$\\
+$\frac{1}{6} . \frac{1}{2} = \frac{1}{12}$\\
+$\Rightarrow \mathcal{X}$ et $\mathcal{Y}$ ne sont pas indépendants.
+
+\subsubsection{$COV (\mathcal{X, Y}) = E (\mathcal{X, Y}) - E (\mathcal{X}) E (\mathcal{Y})$}
+$COV (\mathcal{X, Y}) = E (\mathcal{X, Y}) - E (\mathcal{X}) E (\mathcal{Y})$\\
+$
+\begin{aligned}
+E (\mathcal{X . Y}) &= \underset{i, j}{\sum} x_i \times y_j \times P_{ij} \\
+&= -\frac{1}{4} + \frac{1}{4} - \frac{8}{6} + \frac{8}{6} \\
+&= 0
+\end{aligned}\\
+$
+$E (\mathcal{Y}) = \frac{-2}{6} + \frac{2}{6} = 0$
+
+
+
+\subsection{Exercice 2}
+Soit $a \in \mathbb{R}^{x}_{+}$, $\mathcal{X, Y}$ 2 v.a. à valeurs dans $\mathbb{N}$.\\
+$P ((\mathcal{X} = k) \cap (\mathcal{Y} = j)) = \frac{a}{2^{k + 1} (j!)}$ $\forall (k, j) \in \mathbb{N}^2$
+
+
+\subsubsection{Déterminer a}
+$\underset{k, j}{\sum} P ((\mathcal{X} = 4) \cap (\mathcal{Y} = j)) = 1$\\
+
+\begin{rappel}{Rappel - $e^x$}
+\begin{center}
+$e^x = \overset{+\infty}{\underset{j = 0}{\sum}} \frac{x^j}{j!} (\forall x \in \mathbb{R})$\\
+si on remplace x par 1 $\Rightarrow e = \overset{+\infty}{\underset{j = 0}{\sum}} \frac{1}{j!}$
+\end{center}
+\end{rappel}
+
+\begin{rappel}{Rappel - Série Géométrique}
+\begin{center}
+$\overset{+\infty}{\underset{n = 0}{\sum}} a^n = \frac{1}{1 - a}$ si $|a| < 1$
+\end{center}
+\end{rappel}
+
+$
+\begin{aligned}
+\overset{+\infty}{\underset{k = 0}{\sum}} \overset{+\infty}{\underset{j = 0}{\sum}} \frac{a}{2^{k+1} j!} = 1 &\Leftrightarrow a \overset{+\infty}{\underset{k = 0}{\sum}} \overset{+\infty}{\underset{j = 0}{\sum}} \frac{1}{2^{k+1} j!} = 1 \\
+&\Leftrightarrow a \overset{+\infty}{\underset{k = 0}{\sum}} \frac{1}{2^{k+1}} \overset{+\infty}{\underset{j = 0}{\sum}} \frac{1}{j!} = 1 \\
+&\Rightarrow ae \overset{+\infty}{\underset{k = 0}{\sum}} \frac{1}{2^{k+1}} = 1 \\
+&\Rightarrow ae \frac{1}{2} \overset{+\infty}{\underset{k = 0}{\sum}} \frac{1}{2^k} = 1 \\
+&\Rightarrow a \frac{e}{2} (\frac{1}{1 - \frac{1}{2}}) = 1 \\
+&\Rightarrow ae = 1 \\
+&\boxed{\Rightarrow a = e^{-1}} \\
+\end{aligned}
+$
+
+
+\subsubsection{Déterminer les lois marginales de $\mathcal{X}$ et $\mathcal{Y}$}
+\textbf{Loi marginale de $\mathcal{X}$ :}
+$
+\begin{aligned}
+P (\mathcal{X} = k) &= \overset{+\infty}{\underset{j = 0}{\sum}} P ((\mathcal{X} = k) \cap (\mathcal{Y} = j)) \\
+&= \frac{e^{-1}}{2^{k+1}} \overset{+\infty}{\underset{j = 0}{\sum}} \frac{1}{j!} \\
+&= \frac{e^{-1} \times e}{2^{k+1}} \\
+&\boxed{= \frac{1}{2^{k+1}} (\forall k \in \mathbb{N})} \\
+\end{aligned}\\
+$
+
+\bigskip
+
+\textbf{Loi marginale de $\mathcal{Y}$ :}
+$
+\begin{aligned}
+P (\mathcal{Y} = j) &= \overset{+\infty}{\underset{k = 0}{\sum}} P ((\mathcal{X} = k) \cap (\mathcal{Y} = j)) \\
+&= \frac{e^{-1}}{j!} \overset{+\infty}{\underset{k = 0}{\sum}} \frac{1}{2^{k+1}} \\
+&= \frac{e^{-1}}{j! \times 2} (\frac{1}{1 - \frac{1}{2}}) \\
+&\boxed{= \frac{e^{-1}}{j!}}
+\end{aligned}
+$
+
+
+\subsubsection{Indépendance ?}
+Il faut montrer que le produit des lois marginales est égale à la loi conjointe. En d'autre termes : $P (\mathcal{X} = k) \times P (\mathcal{Y} = j) = P ((\mathcal{X} = k) \cap (\mathcal{Y} = j))$.\\
+
+$\frac{1}{2^{k+1}} \times \frac{e^{-1}}{j!} = \frac{e^{-1}}{2^{k+1} \times j!} \Rightarrow$ \textbf{OK} \checkmark \\
+Les deux variables sont indépendantes.
+
+\begin{remarque}{Remarque}
+$\mathcal{X, Y}$ sont indépendantes $\Rightarrow E (\mathcal{X, Y}) = E (\mathcal{X}) E (\mathcal{Y})$
+\end{remarque}
+
+
+\subsubsection{Calculer $COV(\mathcal{X, Y})$}
+$COV (\mathcal{X, Y}) = E (\mathcal{X, Y}) - E (\mathcal{X}) \times E (\mathcal{Y}) = 0$
+
+
+\subsection{Exercice 3}
+On considère $n$ boites numérotées de 1 à $n$. Le boite numéro $k$ contient $k$ boules numérotées de 1 à $k$. On choisit une boîte au hasard, puis on choisie une boule dans cette boîte.\\
+$\mathcal{X}$ v.a. : numéro de la boîte\\
+$\mathcal{Y}$ v.a. : numéro de la boule
+
+\subsubsection{Déterminer la loi du couple ($\mathcal{X, Y}$)}
+Valeurs possible de $\mathcal{X}$ et $\mathcal{Y}$ :
+{
+\Large
+\begin{center}
+\begin{tabular}{c|c}
+	$\mathcal{X}$ & $\mathcal{Y}$ \\
+	\hline
+	1 & 1 \\
+	2 & 1 \\
+	2 & 2 \\
+	3 & 1 \\
+	3 & 2 \\
+	3 & 3 \\
+\end{tabular}\\
+\end{center}
+}
+
+$\mathcal{X} (\Omega) = \mathcal{Y} (\Omega) = \ldbrack 1, n \rdbrack$\\
+$P ((\mathcal{X} = i) \cap (\mathcal{Y} = j)) = P (\mathcal{Y} = j / \mathcal{X} = i) \times P (\mathcal{X} = i) (\forall (i, j) \in \ldbrack 1, n \rdbrack^2)$\\
+\underline{1\up{er} cas :} Quand $j > i \Rightarrow P ((\mathcal{X} = i) \cap (\mathcal{Y} = j)) = 0$\\
+\underline{2\up{ème} cas :} Quand $j \leq i \Rightarrow P ((\mathcal{X} = i) \cap (\mathcal{Y} = j)) = \frac{1}{i} \times \frac{1}{n}$\\
+
+
+\subsubsection{Calculer $P (\mathcal{X} = \mathcal{Y})$}
+$\mathcal{(X = Y)} = \overset{n}{\underset{i = 1}{\bigcup}} ((\mathcal{X} = i) \cap (\mathcal{Y} = i))$
+
+\begin{remarque}{Remarque}
+$(\mathcal{X} = i) \cap (\mathcal{Y} = i)$ est un évènement incompatible.
+\end{remarque}
+
+$
+\begin{aligned}
+\mathcal{P (X = Y)} &= \overset{n}{\underset{i = 1}{\sum}} P ((\mathcal{X} = i) \cap (\mathcal{Y} = i)) \\
+&=  \overset{n}{\underset{i = 1}{\sum}} \frac{1}{i \times n} \\
+&= \frac{1}{n}  \overset{n}{\underset{i = 1}{\sum}} \frac{1}{i}
+\end{aligned}
+$
+
+
+\subsubsection{Donner la loi marginale de $\mathcal{Y} et E (\mathcal{Y})$}
+$
+\begin{aligned}
+\mathcal{P (Y} = j) &= \overset{n}{\underset{i = 1}{\sum}} P((\mathcal{X} = i) \cap (\mathcal{Y} = j)) \\
+&= \overset{n}{\underset{i \geq j}{\sum}} \frac{1}{i \times n} (\forall j \in \ldbrack 1, n \rdbrack) \\
+&= \frac{1}{n}  \overset{n}{\underset{i \geq j}{\sum}} \frac{1}{i}
+\end{aligned}
+$
+
+\begin{remarque}{Remarque - Suite Arithmétique}
+{
+\Large
+\begin{center}
+$\overset{i}{\underset{j = 1}{\sum}} j = \frac{i (i + 1)}{2}$
+\end{center}
+}
+\end{remarque}
+
+$
+\begin{aligned}
+E (\mathcal{Y}) &= \overset{n}{\underset{j = 1}{\sum}} j P (\mathcal{Y} = j) \\
+&= \overset{n}{\underset{j = 1}{\sum}} \overset{n}{\underset{i \geq j}{\sum}} \frac{1}{i \times n} \\
+&= \frac{1}{n} \overset{n}{\underset{j = 1}{\sum}} (j \overset{n}{\underset{i \geq j}{\sum}} \frac{1}{i}) \\
+&= \frac{1}{n} \overset{n}{\underset{i = 1}{\sum}} (\frac{1}{i} \overset{i}{\underset{j = 1}{\sum}} j) \\
+&= \frac{1}{n} \overset{n}{\underset{i = 1}{\sum}} (\frac{1}{i} \times \frac{i (i + 1)}{2}) \\
+&= \frac{1}{n} \overset{n}{\underset{i = 1}{\sum}} \frac{i + 1}{2} \\
+&= \frac{1}{2n} (\frac{n(n + 1)}{2} + n) \\
+&= \frac{1}{2} (\frac{n + 1}{2} + 1) \\
+&\boxed{= \frac{n + 3}{4}}
+\end{aligned}
+$
+
+
+\subsection{Exercice 4}
+Une urne contient une boule blanche et une boule noire. On y prélève une boule. Chaque boule ayant la même probabilité d'être tiré, on note sa couleurs et on la remet dans l'urne avec $c$ boules de la même couleur. On répète cette expérience $n$ fois ($n \geq 2$). $c$ est une constante fixé qui ne change pas.\\
+$\mathcal{X}_i
+\left \{
+\begin{array}{l}
+1 \text{ si on obtiens une boule blanche au } i\text{\up{ème} tirage} \\
+0 \text{ sinon}
+\end{array}
+\right .
+$
+\subsubsection{La loi du couple ($\mathcal{X}_1, \mathcal{X}_2$) et en déterminer la loi de $\mathcal{X}_2$}
+$P (\mathcal{X}_1 = 1) = P (\mathcal{X}_1 = 0) = \frac{1}{2}$ \\
+$\mathcal{X}_i$ suis la variable de Bernoulli $\mathcal{B} (\frac{1}{2})$ \\
+$P ((\mathcal{X}_1 = i) \cap (\mathcal{X}_2 = j)) = P (\mathcal{X}_2 = j / \mathcal{X}_1 = i) \times P (\mathcal{X}_1 = i)$ \\
+
+\begin{flushleft}
+\underline{1\up{er} cas $i \neq j$ :} $P ((\mathcal{X}_1 = i) \cap (\mathcal{X}_2 = j)) = \frac{1}{c + 2} \times \frac{1}{2}$ \\
+\underline{2\up{ème} cas $i = j$ :} \\
+$
+\begin{aligned}
+P ((\mathcal{X}_1 = i) \cap (\mathcal{X}_2 = i)) &= P (\mathcal{X}_2 = i / \mathcal{X}_1 = i) \times P (\mathcal{X}_1 = i) \\
+&= \frac{1 + c}{2 + c} \times \frac{1}{2}
+\end{aligned}
+$
+\end{flushleft}
+
+{
+\Large
+\begin{center}
+\begin{tabular}{c|cc|c}
+	$\mathcal{X}_1$ / $\mathcal{X}_2$ & 0 & 1 & loi $\mathcal{X}_1$ \\
+	\hline
+	0 & $\frac{1 + c}{2 (2 + c)}$ & $\frac{1}{2 (2 + c)}$ & $\frac{1}{2}$ \\
+	1 & $\frac{1}{2 (2 + c)}$ & $\frac{1 + c}{2 (2 + c)}$ & $\frac{1}{2}$ \\
+	\hline
+	loi $\mathcal{X}_2$ & $\frac{1}{2}$ & $\frac{1}{2}$ & 1 \\
+
+\end{tabular}\\
+\end{center}
+}
+
+\underline{D'après le tableau :} $\mathcal{X}_2$ suis la variable $\mathcal{B} (\frac{1}{2})$ (Bernoulli).
+
+
+\subsubsection{Déterminer la loi de $\mathcal{Z}_2$}
+\begin{flushleft}
+$\mathcal{Z}_p = \overset{p}{\underset{p}{\sum}} \mathcal{X}_i \quad (2 \leq p \leq n)$ \\
+$\mathcal{Z}_p$ : nombre de boules blanches obtenue lors des premiers tirages. \\
+$\mathcal{Z}_2 = \mathcal{X}_1 + \mathcal{X}_2$ \\
+$\mathcal{Z}_2 (\Omega) = \{0, 1, 2\}$ \\
+$P (\mathcal{Z}_2 = 0) = P ((\mathcal{X}_1 = 0) \cap (\mathcal{X}_2 = 0)) = \frac{1 + c}{2 (2 + c)}$ \\
+$
+\begin{aligned}
+P (\mathcal{Z}_2 = 1) &= P ((\mathcal{X}_1 = 0) \cap (\mathcal{X}_2 = 0)) + P ((\mathcal{X}_1 = 1) \cap (\mathcal{X}_2 = 0)) \\
+&= \frac{1}{2 + c}
+\end{aligned}
+$
+
+$
+\begin{aligned}
+P (\mathcal{Z}_2 = 2) &= P ((\mathcal{X}_1 = 1) \cap (\mathcal{X}_2 = 1)) \\
+&= \frac{1 + c}{2 (2 + c)}
+\end{aligned}
+$
+\end{flushleft}
+
+
+\subsubsection{Déterminer $\mathcal{Z}_p(\Omega)$ et calculer $P (\mathcal{X}_{p + 1} = 1 / \mathcal{Z}_p = k)$}
+$P (\mathcal{X}_{p + 1} = 1 / \mathcal{Z}_p = k)$ et $\mathcal{Z}_p = \overset{p}{\underset{i = 1}{\sum}} \mathcal{X}_i$ \\
+$(\mathcal{Z}_p = k) \Leftrightarrow$ Evenement \og{} \textit{Au cours des $p$ premier tirage on a obtenue k boules blanches et $(p - k)$ boules noires.}\fg{} \\
+Avant de passer au $(p + 1)$\up{ième} tirage l'urne contiens : $kc + (p - k)c + 2 = 2 + pc$ dont $1 + kc$ boules blanches. \\
+Ainsi : $P (\mathcal{X}_{p + 1} = 1 / \mathcal{Z}_p = k) = \frac{1 + kc}{2 + pc}$
+
+
+\subsubsection{Montrer que $P (\mathcal{X}_{p + 1} = 1) = \frac{1 + cE(\mathcal{Z}_p)}{2 + pc}$}
+$(\mathcal{X}_{p + 1} = 1) = \overset{p}{\underset{k = 0}{\bigcup}} ((\mathcal{X}_{p + 1} = 1) \cap (\mathcal{Z}_p = k))$
+\begin{remarque}{Remarque}
+$(\mathcal{X}_{p + 1} = 1) \cap (\mathcal{Z}_p = k)$ est un évènement incompatible.
+\end{remarque}
+
+$
+\begin{aligned}
+P (\mathcal{X}_{p + 1} = 1) &= \overset{p}{\underset{k = 0}{\sum}} P ((\mathcal{X}_{p + 1} = 1) \cap (\mathcal{Z}_{p} = k)) \\
+&= \overset{p}{\underset{k = 0}{\sum}} P (\mathcal{X}_{p + 1} = 1 / \mathcal{Z}_p = k) \times P (\mathcal{Z}_p = k) \\
+&= \overset{p}{\underset{k = 0}{\sum}} (\frac{1 + kc}{2 + pc}) \times P (\mathcal{Z}_p = k) \\
+&= \frac{1}{2 + pc} \times (\overset{p}{\underset{k = 0}{\sum}} P (\mathcal{Z}_p = k) + c \overset{p}{\underset{k = 0}{\sum}} k P (\mathcal{Z}_p = k)) \\
+&\boxed{= \frac{1 + c E(\mathcal{Z}_p)}{2 + pc}}
+\end{aligned}
+$
+
+
+\subsubsection{Montrer que $P (\mathcal{X}_p = 1) = P (\mathcal{X}_p = 0) = \frac{1}{2} \quad (\forall p \in \ldbrack 1, n \rdbrack)$}
+\begin{rappel}{Rappel}
+{
+\Large
+\begin{center}
+$E(\mathcal{X}) = \underset{k}{\sum} k P (\mathcal{X} = k)$
+\end{center}
+}
+\end{rappel}
+
+Soit $R_p$ la propriété  : $P (\mathcal{X}_p = 1) = P (\mathcal{X}_p = 0) = \frac{1}{2}$. \\
+$R_1$ et $R_2$ sont vérifié (1\up{ère} question). \\
+
+\begin{rappel}{Rappel - Bernoulli}
+Soit $\mathcal{X}_i$ suis $\mathcal{B} (q)$ \\
+Alors : $E (\mathcal{X}_i) = q$, $V (\mathcal{X}_i) = q (1 - q)$
+\end{rappel}
+
+\underline{Hypothèse :} Supposons $R_k$ vraie $\forall 1 \leq k \leq p$ \\
+$P (\mathcal{X}_{p + 1} = 1) = \frac{1 + c E(\mathcal{Z}_p)}{2 + pc}$ \\
+$\mathcal{Z}_p = \overset{p}{\underset{i = 1}{\sum}} \mathcal{X}_i \Rightarrow E(\mathcal{Z}_p) = \overset{p}{\underset{i = 1}{\sum}} E (\mathcal{X}_i)$ \\
+$P (\mathcal{X}_{p + 1} = 1) = \frac{1 + \frac{cp}{2}}{2 + pc} = \frac{1}{2}$ \\
+$P (\mathcal{X}_{p + 1} = 0) = 1 - \frac{1}{2} = \boxed{\frac{1}{2}}$ \\
+
+\underline{Conclusion :} $R_p$ est vraie $\forall 1 \leq p \leq n$
+
+
+
+\subsection{Exercice 5}
+Une urne contiens des boules noires en proportion $p$ ($1 \leq p \leq 1$) et des boules blanches en proportion $q = 1 - p$. On effectue une suite de tirage d'une boule avec remise.
+
+\subsubsection{Question 1 : loi marginale et indépendance}
+\textbf{On note $N$ le rang aléatoire d'apparition de la première boule noire et $B$ celui de la première boule blanche.}
+
+\paragraph{a) Déterminer les lois de $N$ et $B$, $E(N)$, $V(N)$, $E(B)$, $V(B)$ \\}
+$
+\left \{
+\begin{array}{l}
+N \text{: temps d'attente de la réalisation de la 1\up{ère} boule noire} \\
+B \text{: temps d'attente de la réalisation de la 1\up{ère} boule blanche}
+\end{array}
+\right .
+$
+
+$N$ suis la loi géométrique de paramètre $p$ (autrement dit : $N \nearrow \mathcal{G} (p)$) \\
+
+\begin{flushleft}
+$P (N = k) = (1 - p)^{k - 1} \times p$ \\
+$N(\Omega) = \ldbrack 1, +\infty \ldbrack$ \\
+$B(\Omega) = \ldbrack 1, +\infty \ldbrack$ \\
+$P (B = k) = (1 - q) \times q$ \\
+$B \nearrow \mathcal{G}(q)$ pour $q = 1 - p$ \\
+$E(N) = \frac{1}{p} \quad V(N) = \frac{q}{p^2}$ \\
+$E(B) = \frac{1}{q} \quad V(B) = \frac{p}{q^2}$ \\
+$P (N = k) = q^{k - 1} \times p \quad (\forall k \in \mathbb{N}^*)$ \\
+$P (B = k) = p^{k - 1} \times q \quad (\forall k \in \mathbb{N}^*)$ \\
+\end{flushleft}
+
+
+\paragraph{b) $N$ et $B$ sont-elle indépendante ? \\}
+\begin{flushleft}
+$P ((N = 1) \cap (B = 1)) = 0 \quad (N = 1) \cap (B = 1) = \varnothing$ \\
+$P(N = 1) \times P (B = 1) = pq \neq 0$ \\
+Donc $N$ et $B$ ne sont pas indépendantes.
+\end{flushleft}
+
+
+\subsubsection{Question 2 : loi conjointe}
+\textbf{On note $\mathcal{X}$ la longueur de la 1\up{ère} suite de boule de a même couleur et $\mathcal{Y}$ celle de la 2\up{ème} suite de boule de la même couleur.}
+
+\begin{flushleft}
+Exemple : $(\mathcal{X} = 1) \cap (\mathcal{Y} = 2)$ : $(B_1 \cap N_2 \cap N_3 \cap B_4) \cup (N_1 \cap B_2 \cap B_3 \cap N_4)$
+\end{flushleft}
+
+
+\paragraph{a) Déterminer la loi conjointe de $(\mathcal{X, Y})$ \\}
+\begin{flushleft}
+$\mathcal{X} (\Omega) = \mathcal{Y} (\Omega) = \mathbb{N}^*$ \\
+$(\mathcal{X} = i) \cap (\mathcal{Y} = j)$ : \\
+$(N_1 \cap \cdots \cap N_i \cap B_{i + 1} \cap \cdots \cap B_{i + j} \cap N_{i + j + 1}) \cup (B_1 \cap \cdots \cap B_i \cap N_ {i + 1} \cap \cdots \cap N_{i + j} \cap B_{i + j + 1})$ \\
+$\boxed{P ((\mathcal{X} = i) \cap (\mathcal{Y} = j)) = p^{i + 1} \times q^j + q^{i + 1} \times p^j}$
+\end{flushleft}
+
+
+\paragraph{b) Loi de $\mathcal{X}$? $E(\mathcal{X})$ et $E(\mathcal{X}) \geq 2$ \\}
+\begin{flushleft}
+\begin{rappel}{Rappel}
+{
+\Large
+\begin{center}
+$\overset{+\infty}{\underset{j = 0}{\sum}} \mathcal{X}^j = \frac{1}{1 - \mathcal{X}} \quad |\mathcal{X}| < 1$
+\end{center}
+}
+\end{rappel}
+\end{flushleft}
+
+$
+\begin{aligned}
+\forall i \in \mathbb{N}^* \quad P (\mathcal{X} = i) &= \overset{+\infty}{\underset{j = 1}{\sum}} (p^{i + 1} \times q^j + q^{i + 1} \times p^j) \\
+&= p^{i + 1} \overset{+\infty}{\underset{j = 1}{\sum}} q^j + q^{i + 1} \overset{+\infty}{\underset{j = 1}{\sum}} p^j \\
+&= \frac{p^{i + 1} q}{1 - q} + \frac{q^{i + 1} p}{1 - p} \\
+&\boxed{= p^iq + q^ip}
+\end{aligned}
+$
+
+\begin{rappel}{Rappel}
+$f(p) = \overset{+\infty}{\underset{n = 0}{\sum}} p^n = \frac{1}{1 - p} \quad (|p| < 1)$ \\
+$f'(p) = \overset{+\infty}{\underset{n = 1}{\sum}} np^{n - 1} = \frac{1}{(1 - p)^2}$
+\end{rappel}
+
+\begin{flushleft}
+$P (\mathcal{X} = i) = p^iq + q^ip$ \\
+$
+\begin{aligned}
+E(\mathcal{X}) &= \overset{+\infty}{\underset{n \geq 1}{\sum}} n \times P (\mathcal{X} = n) \\
+&= \overset{+\infty}{\underset{n \geq 1}{\sum}} (np^nq + nq^np) \\
+&= q \overset{+\infty}{\underset{n \geq 1}{\sum}} np^n + p \overset{+\infty}{\underset{n \geq 1}{\sum}} nq^n \\
+&= \frac{qp}{(1 - p)^2} + \frac{pq}{(1 - q)^2} \\
+&= \frac{p}{q} + \frac{q}{p} \\
+&\boxed{= \frac{p^2 + q^2}{pq}}
+\end{aligned}
+$
+
+$
+\begin{aligned}
+\text{or }(p - q)^2 \geq 0 &\Rightarrow p^2 + q^2 - 2pq \geq 0 \\
+&\Rightarrow \frac{p^2 + q^2}{pq} \geq 2 \\
+&\Rightarrow E(\mathcal{X}) \geq 2
+\end{aligned}
+$
+\end{flushleft}
+
+
+\paragraph{c) Loi de $\mathcal{Y}$? $E(\mathcal{Y})$ et $E(\mathcal{Y})$ \\}
+\begin{flushleft}
+$
+\begin{aligned}
+\forall j \in \mathbb{N}^* \quad P (\mathcal{Y} = j) &= \overset{+\infty}{\underset{i = 1}{\sum}} (p^{i + 1} q^j + q^{i + 1} p^j) \\
+&= q^j p \overset{+\infty}{\underset{i = 1}{\sum}} p^i + qp^i \overset{+\infty}{\underset{i = 1}{\sum}} q^i \\
+&= q^jp^2 \frac{1}{1 - p} + \frac{q^2 p^j}{1 - q} \\
+&= p^2q^{j - 1} + q^2p^{j - 1} \\
+&\boxed{= p^2 q^{j - 1} + q^2 p^{j - 1}}
+\end{aligned}
+$
+
+$
+\begin{aligned}
+E(\mathcal{Y}) &= \underset{n \geq 1}{\sum} n p^2 q^{n - 1} + \underset{n \geq 1}{\sum} n q^2 p^{n - 1} \\
+&= p^2 \underset{n \geq 1}{\sum} n q^{n - 1} + q^2 \underset{n \geq 1}{\sum} n p^{n - 1} \\
+&= \frac{p^2}{(1 - q)^2} + \frac{q^2}{(1 - p)^2} \\
+&= 1 + 1 \\
+&\boxed{= 2}
+\end{aligned}
+$
+
+$V(\mathcal{Y}) = E(\mathcal{Y}^2) - E^2(\mathcal{Y})$ \\
+
+\begin{rappel}{Rappel}
+$\underset{n \geq 1}{\sum} np^n = \frac{p}{(1 - p)^2} \quad$ (en dérivant cette fonction en fonction de $p$). \\
+
+$
+\begin{aligned}
+\underset{n \geq 1}{\sum} n^2 p^{n - 1} &= \frac{(1 - p)^2 + 2p (1 - p)}{(1 - p)^4} \\
+&= \frac{1 - p + 2p}{(1 - p)^3} \\
+&\boxed{= \frac{1 + p}{(1 - p)^3}}
+\end{aligned}
+$
+\end{rappel}
+
+$
+\begin{aligned}
+E(\mathcal{Y}^2) &= \underset{n \geq 1}{\sum} n^2 P (\mathcal{Y} = n) \\
+&= \underset{n \geq 1}{\sum} n^2 p^2 q^{n - 1} + \underset{n \geq 1}{\sum} n^2 q^2 p^{n - 1} \\
+&= p^2 \underset{n \geq 1}{\sum} n^2 q^{n - 1} + q^2 \underset{n \geq 1}{\sum} n^2 p^{n - 1} \\
+&= p^2 \left (\frac{1 + q}{(1 - q)^3} \right ) + q^2 \left (\frac{1 + p}{(1 - p)^3} \right ) \\
+&= \frac{1 + q}{p} + \frac{1 + p}{q} \\
+&\boxed{= \frac{2q}{p} + \frac{2p}{q} + 2}
+\end{aligned}
+$
+
+$
+\begin{aligned}
+V(\mathcal{Y}) &= \frac{2q}{p} + \frac{2p}{q} + 2 - 4 \\
+&\boxed{= 2 (\frac{q}{p} + \frac{p}{q} - 1)}
+\end{aligned}
+$
+
+\end{flushleft}
+
+
+\paragraph{d) Calculer $P (\mathcal{X} = \mathcal{Y})$ \\}
+$P ((\mathcal{X} = i) \cap (\mathcal{Y} = j)) = p^{i + 1} q^j + q^{i + 1} p^j$ \\
+$(\mathcal{X} = \mathcal{Y}) = \overset{+\infty}{\underset{n = 1}{\bigcup}} ((\mathcal{X} = n) \cap (\mathcal{Y} = n))$ \\
+
+\begin{note}{Note}
+$(\mathcal{X} = n) \cap (\mathcal{Y} = n)$ est in évènement indépendant.
+\end{note}
+
+$
+\begin{aligned}
+P (\mathcal{X} = \mathcal{Y}) &= \overset{+\infty}{\underset{n = 1}{\sum}} P ((\mathcal{X} = n) \cap (\mathcal{Y} = n)) \\
+&= \overset{+\infty}{\underset{n = 1}{\sum}} (p^{n + 1} q^n + q^{n + 1} p^n) \\
+&= p \overset{+\infty}{\underset{n = 1}{\sum}} (pq)^n + q \overset{+\infty}{\underset{n = 1}{\sum}} (pq)^n \\
+&= p^2 q \left (\frac{1}{1 - pq} \right ) + pq^2 \left (\frac{1}{1 - pq} \right ) \\
+&= \frac{p^2q + pq^2}{1 - pq} \\
+&= \frac{pq (p + q)}{1 - pq} \\
+&\boxed{= \frac{pq}{1 - pq}} \\
+\end{aligned}
+$
+
+\begin{remarque}{Remarque}
+Dans le cas ou on a 2 variables souvent on obtiens une série.
+\end{remarque}
+
+
+\paragraph{e) Calculer la loi de $\mathcal{X + Y} \quad (p = \frac{1}{2})$ \\}
+$\mathcal{X} (\Omega) = \mathcal{Y} (\Omega) = \mathbb{N}^*$ \\
+
+\begin{note}{Note}
+{
+\Large
+\begin{center}
+$\overset{+\infty}{\underset{n = 0}{\sum}} p^n = \frac{1}{1 - p}$
+\end{center}
+}
+\end{note}
+
+$(\mathcal{X} + \mathcal{Y})(\Omega) = \ldbrack 2, +\infty \ldbrack$ \\
+
+On cherche a prouver : $\forall k \in \ldbrack 2, +\infty \ldbrack \quad P (\mathcal{X} + \mathcal{Y} = k)$ \\
+
+$
+\begin{aligned}
+P ((\mathcal{X} = i) \cap (\mathcal{Y} = j)) &= \frac{1}{2^{i + 1}} \times \frac{1}{2^j} + \frac{1}{2^{i + 1}} \times \frac{1}{2^j} \\
+&= \left ( \frac{1}{2} \right )^{i + j}
+\end{aligned}
+$
+
+$
+\begin{aligned}
+P (\mathcal{X} + \mathcal{Y} = k) &= \underset{(i, j) / i + j = k}{\sum} P ((\mathcal{X} = i) \cap (\mathcal{Y} = j)) \\
+&= \overset{k - 1}{\underset{i = 1}{\sum}} P ((\mathcal{X} = i) \cap (\mathcal{Y} = k - i)) \\
+&= \overset{k - 1}{\underset{i = 1}{\sum}} \left ( \frac{1}{2} \right )^{k} \\
+&\boxed{= (k - 1) \left ( \frac{1}{2} \right )^{k}} \\
+\end{aligned}
+$
+
+\subsection{Exercice 6}
+Soit $a \in ] 0, 1 [$ et $b \in ] 0, +\infty [$. $\mathcal{X}$ et $\mathcal{Y}$ deux v.a. dont la loi conjointe est : \\
+$P ((\mathcal{X} = i) \cap (\mathcal{Y} = j))
+\left \{
+\begin{array}{lc}
+0 & i < j \\
+\frac{b^i e^{-b} a^j (1 - a)^{i - j}}{j! (i - j)!} & i \geq j
+\end{array}
+\right .
+$\\
+$\mathcal{X} (\Omega) = \mathcal{Y} (\Omega) = \mathbb{N}$
+
+\subsubsection{Déterminer les loi marginales ainsi que $E(\mathcal{X}), V(\mathcal{X}), E(\mathcal{Y}), V(\mathcal{Y})$}
+\begin{note}{Note}
+{
+\Large
+\begin{center}
+$
+\left (
+\begin{array}{c}
+i \\
+j \\
+\end{array}
+\right )
+ = \frac{i!}{j! (i - j)!}
+$
+\end{center}
+}
+\end{note}
+
+\begin{rappel}{Rappel - Formule du Binôme de Newton}
+{
+\Large
+\begin{center}
+$(a + b)^n = \overset{n}{\underset{k = 0}{\sum}} \left ( \begin{array}{c} n \\ k \end{array} \right ) a^k b^{n - k}$
+\end{center}
+}
+\end{rappel}
+
+$
+\begin{aligned}
+P (\mathcal{X} = i) &= \underset{j \in \mathbb{N}}{\sum} P ((\mathcal{X} = i) \cap (\mathcal{Y} = j)) \\
+&= \overset{i}{\underset{j = 0}{\sum}} \frac{b^i e^{-b} a^j (1 - a)^{i - j}}{j! (i - j)!} \\
+&= b^i e^{-b} \overset{i}{\underset{j = 0}{\sum}} \frac{a^j (1 - a)^{i - j}}{j! (i - j)!} \\
+&= \frac{b^i e^{-b}}{i!}  \overset{i}{\underset{j = 0}{\sum}} \left ( \begin{array}{c} i \\ j \end{array} \right ) a^j (1 - a)^{i - j} \\
+&= \frac{b^i e^{-b}}{i!} (a + 1 - a)^i \quad \text{(Formule du Binôme de Newton)} \\
+&\boxed{= e^{-b} \frac{b^i}{i!}} \quad \forall i \in \mathbb{N}
+\end{aligned}
+$ \\
+
+\begin{rappel}{Rappel - Loi de Poisson}
+On dit que $\mathcal{X}$ suit $\mathcal{P} (\lambda)$ la loi de Poisson :
+{
+\Large
+\begin{center}
+$\boxed{P (X = k) = e^{-k} \frac{\lambda^k}{k!} \quad \forall k \in \mathbb{N}}$ \\
+\end{center}
+}
+$E(\mathcal{X}) = V(\mathcal{X}) = \lambda$
+\end{rappel}
+
+$\mathcal{X} \nearrow \mathcal{P} (b)$ ainsi $E(\mathcal{X}) = V(\mathcal{X}) = \lambda \quad \forall j \in \mathcal{N}$ \\
+
+\begin{rappel}{Rappel}
+{
+\Large
+\begin{center}
+$e^n = \overset{+\infty}{\underset{k = 0}{\sum}} \frac{nk}{k!} \quad \forall n \in \mathbb{R}$
+\end{center}
+}
+\end{rappel}
+
+$
+\begin{aligned}
+P(\mathcal{Y} = j) &= \underset{i \in \mathbb{N}}{\sum} P((\mathcal{X} = i) \cap (\mathcal{Y} = j)) \\
+&= \overset{+\infty}{\underset{i = j}{\sum}} \frac{b^i e^{-b} a^j (1 - a)^{i - j}}{j! (i - j)!} \\
+&= \frac{e^{-b} a^j}{j!} \overset{+\infty}{\underset{i = j}{\sum}} \frac{b^i (1 - a)^{i - j}}{(i - j)!} \\
+&= \frac{e^{-b} (ab)^j}{j!} \overset{+\infty}{\underset{i = j}{\sum}} \frac{(b(1 - a))^{i - j}}{(i - j)!} \\
+&= \frac{e ^{-b} (ab)^j}{j!} \times e^{b (1 - a)} \\
+&\boxed{= \frac{(ab)^j}{j!} \times e^{-ab} }
+\end{aligned}
+$\\
+
+Donc $\mathcal{Y} \nearrow \mathcal{P} (ab)$. 
+
+
+\subsubsection{$\mathcal{X}$ et $\mathcal{Y}$ sont-elles indépendantes ?}
+\begin{flushleft}
+$\mathcal{X} \nearrow \mathcal{P} (b) \quad P((\mathcal{X} = 0) \cap (\mathcal{Y} = 1)) = 0$ \\
+$P(\mathcal{X} = 0) \times P(\mathcal{Y} = 1) = e^{-b} ab e^{-ab} \neq 0$ \\
+$\mathcal{X}$ et $\mathcal{Y}$ ne sont pas indépendantes.
+\end{flushleft}
+
+
+\subsubsection{Déterminer la loi de $\mathcal{Z} = \mathcal{X} - \mathcal{Y}$}
+$
+\begin{aligned}
+P(\mathcal{Z} = k) &= \underset{(i, j) / i - j = k}{\sum} P((\mathcal{X} = i) \cap (\mathcal{Y} = j)) \\
+&= \overset{+\infty}{\underset{i \geq k}{\sum}} P((\mathcal{X} = i) \cap (\mathcal{Y} = i - k)) \\
+&= \overset{+\infty}{\underset{i = k}{\sum}} \frac{b^i e^{-b} a^{i - k} (1 - a)^k}{(i - k)! k!} \\
+&= \frac{e^{-b} (1 - a)^k}{k!} \overset{+\infty}{\underset{i = k}{\sum}} \frac{b^i a^{i - k}}{(i - k)!} \\
+&= \frac{e^{-b} ((1 - a)b)^k}{k!} \overset{+\infty}{\underset{i = k}{\sum}} \frac{(ab)^{i - k}}{(i - k)!} \\
+&= \frac{e^{-b} ((1 - a)b)^k}{k!} \times e^{ab} \\
+&= e^{-b (1 - a) \frac{((1 - a)b)^k}{k!}}
+\end{aligned}
+$
+
+$\mathcal{Z} \nearrow \mathcal{P} ((1 - a)b)$.
+
+
+\subsubsection{$\mathcal{Y} et \mathcal{Z}$ sont-elle indépendantes ?}
+
+
+\section{Description multidimensionnelle}
+
+\subsection{Tableau de donnée}
+\subsection{Matrice de poids}
+\subsection{Matrice de données centré}
+\subsection{Matrice de V $\in$ v ???}
+\subsection{Matrice de corrélations}
+\subsection{Algorithme A.C.P. (Analyse Composante Principale)}
+\subsection{Projection}
+
+
+\end{document}
