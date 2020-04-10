@@ -945,7 +945,7 @@ P (\mathcal{X} = i) &= \underset{j \in \mathbb{N}}{\sum} P ((\mathcal{X} = i) \c
 &= b^i e^{-b} \overset{i}{\underset{j = 0}{\sum}} \frac{a^j (1 - a)^{i - j}}{j! (i - j)!} \\
 &= \frac{b^i e^{-b}}{i!}  \overset{i}{\underset{j = 0}{\sum}} \left ( \begin{array}{c} i \\ j \end{array} \right ) a^j (1 - a)^{i - j} \\
 &= \frac{b^i e^{-b}}{i!} (a + 1 - a)^i \quad \text{(Formule du Binôme de Newton)} \\
-&\boxed{= e^{-b} \frac{b^i}{i!}} \quad \forall i \in \mathbb{N}
+&\boxed{= e^{-b} \frac{b^i}{i!} \quad \forall i \in \mathbb{N}}
 \end{aligned}
 $ \\
 
@@ -1004,21 +1004,38 @@ P(\mathcal{Z} = k) &= \underset{(i, j) / i - j = k}{\sum} P((\mathcal{X} = i) \c
 &= \frac{e^{-b} ((1 - a)b)^k}{k!} \times e^{ab} \\
 &= e^{-b (1 - a) \frac{((1 - a)b)^k}{k!}}
 \end{aligned}
-$
+$ \\
 
 $\mathcal{Z} \nearrow \mathcal{P} ((1 - a)b)$.
 
 
 \subsubsection{$\mathcal{Y} et \mathcal{Z}$ sont-elle indépendantes ?}
+$\mathcal{Y} \nearrow \mathcal{P} (ab), \mathcal{Z} \nearrow \mathcal{P} ((1 - a)b) \quad \forall (j, k) \in \mathbb{N}$ \\
+
+$
+\begin{aligned}
+P((\mathcal{Y} = j) \cap (\mathcal{Z} = k)) &= P((\mathcal{Y} = j) \cap (\mathcal{X} - \mathcal{Y} = k)) \\
+&= P((\mathcal{Y} = j) \cap (\mathcal{X} = j + k)) \\
+&= \frac{b^{j + k} e^{-b} a^j (1 - a)^k}{j! k!}
+\end{aligned}
+$ \\
+
+$
+\begin{aligned}
+P(\mathcal{Y} = j) \times P(\mathcal{Z} = k) &= e^{-ab} \frac{(ab)^j}{j!} \times e^{(1 - a)b} \frac{((1 - a)b)^k}{k!} \\
+&= \frac{(ab)^j e^{-b} ((1 - a)b)^k}{j! k!}
+\end{aligned}
+$ \\
 
 
-\section{Description multidimensionnelle}
 
-\subsection{Tableau de donnée}
-\subsection{Matrice de poids}
-\subsection{Matrice de données centré}
-\subsection{Matrice de V $\in$ v ???}
-\subsection{Matrice de corrélations}
+\section{Analyse en composante principale}
+\subsection{Les données et leurs caractéristiques}
+\subsubsection{Tableau de donnée}
+\subsubsection{Matrice de poids}
+\subsubsection{Centre de gravité}
+\subsubsection{Matrice de Variance - Covariance et Matrice de Corrélation}
+
 \subsection{Algorithme A.C.P. (Analyse Composante Principale)}
 \subsection{Projection}
 
