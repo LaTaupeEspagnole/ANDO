@@ -1028,13 +1028,98 @@ P(\mathcal{Y} = j) \times P(\mathcal{Z} = k) &= e^{-ab} \frac{(ab)^j}{j!} \times
 $ \\
 
 
-
 \section{Analyse en composante principale}
 \subsection{Les données et leurs caractéristiques}
 \subsubsection{Tableau de donnée}
+Les observations de $p$ variables sur $n$ individus sont rassemblé en une matrice $X$ à $n$ ligne et $p$ colonne : \\
+
+\begin{flushleft}
+$X =
+\begin{pmatrix}
+   X^{(1)}_{1} & ... & X^{(j)}_{1} & .. & X^{(p)}_{1} \\
+   & & : & & \\
+   x^{(1)}_{i} & ... & X^{(j)}_{i} & ... & X^{(p)}_{i} \\
+   & & : & & \\
+   X^{(1)}_{n} & ... & X^{(j)}_{n} & .. & X^{(p)}_{n}
+\end{pmatrix}
+$ \\
+\medskip
+$X^{(j)}_{i}$ : valeurs prises par la valeur $X^{(j)}$ sur le i\up{ème} individu. \\
+\medskip
+$
+X^{(j)} =
+\begin{pmatrix}
+X^{(j)}_{1} \\
+X^{(j)}_{2} \\
+: \\
+X^{(j)}_{n} \\
+\end{pmatrix}
+$ \\
+\medskip
+$t_{e_{i}} = (X^{(1)}_i, X^{(2)}_i, ..., X^{(p)}_i) \quad$ i\up{ème} individu. \\
+\end{flushleft}
+
+
 \subsubsection{Matrice de poids}
+On associe à chaque individu un poids $p_i \quad (p_i \geq 0)$ (probabilité de choisir l'individu i). \\
+
+\begin{flushleft}
+$\overset{n}{\underset{i = 1}{\sum}} p_i = 1 \quad D = 
+\begin{pmatrix}
+p_i & & & & \text{\LARGE 0} \\
+& . & & & \\
+& & . & & \\
+& & & .  &\\
+\text{\LARGE 0} & & & & p_n \\
+\end{pmatrix}
+$ \\
+\medskip
+Si $p_i = \frac{1}{n} \quad \forall i \quad D = \frac{1}{n} I_n \quad$ ($I_n$ : Matrice Identité) \\
+\end{flushleft}
+
+
 \subsubsection{Centre de gravité}
+Le vecteur g : $t_g = (\overline{X^{(1)}}, \overline{X^{(2)}}, .., \overline{X^{(p)}})$ \\
+
+\begin{flushleft}
+$\overline{X^{(j)}} = \overset{n}{\underset{i = 1}{\sum}} p_i X^{(j)}_{i} \quad$ Moyenne arithmétique de $X^{(j)}$. \\
+
+Le tableau des données centré : $Y$ \\
+\medskip
+$\boxed{Y^{(j)}_i = X^{(j)}_i - \overline{X^{(j)}}}$
+\end{flushleft}
+
+
 \subsubsection{Matrice de Variance - Covariance et Matrice de Corrélation}
+$\boxed{V = t_{YDY}} \quad$ Matrice de Variance-Covariance. \\
+
+\begin{flushleft}
+On note :
+$
+D_{\frac{1}{S}} =
+\begin{pmatrix}
+\frac{1}{S_1} & & & & \text{\LARGE 0} \\
+& \frac{1}{S_2} & & & \\
+& & . & & \\
+& & & .  &\\
+\text{\LARGE 0} & & & & \frac{1}{S_p}\\
+\end{pmatrix}
+$ \\
+\medskip
+$
+\begin{aligned}
+S_j &= \sqrt{V(X^{(j)})} \quad \text{écart type} \\
+&= \sqrt{\overset{n}{\underset{i = 0}{\sum}} p_i \left (Y^{(j)}_i \right )^2}
+\end{aligned}
+$ \\
+\medskip
+$Z$ : tableau des données centré réduite. \\
+\medskip
+$\boxed{Z^{(j)}_i = \frac{Y^{(j)}_i}{S_j}}$ \\
+\medskip
+$\boxed{Z = YD_{\frac{1}{S}}}$
+\end{flushleft}
+
 
 \subsection{Algorithme A.C.P. (Analyse Composante Principale)}
 \subsection{Projection}
