@@ -46,6 +46,7 @@
 \newtcolorbox{remarque}[1]{colback=green!5!white,colframe=green!65!black,fonttitle=\bfseries,title=#1}
 \newtcolorbox{info}[1]{colback=white,colframe=blue!60!white,fonttitle=\bfseries,title=#1}
 \newtcolorbox{rappel}[1]{colback=white,colframe=red!60!white,fonttitle=\bfseries,title=#1}
+\newtcolorbox{propriete}[1]{colback=white,colframe=orange!70!white,fonttitle=\bfseries,title=#1}
 % === End Commandes ===
 
 \pagestyle{fancy}
@@ -1079,46 +1080,173 @@ Si $p_i = \frac{1}{n} \quad \forall i \quad D = \frac{1}{n} I_n \quad$ ($I_n$ : 
 
 
 \subsubsection{Centre de gravité}
-Le vecteur g : $t_g = (\overline{X^{(1)}}, \overline{X^{(2)}}, .., \overline{X^{(p)}})$ \\
+Le vecteur g : $t_g = (\overline{X}^{(1)}, \overline{X}^{(2)}, .., \overline{X}^{(p)})$ \\
 
 \begin{flushleft}
-$\overline{X^{(j)}} = \overset{n}{\underset{i = 1}{\sum}} p_i X^{(j)}_{i} \quad$ Moyenne arithmétique de $X^{(j)}$. \\
+$\overline{X}^{(j)} = \overset{n}{\underset{i = 1}{\sum}} p_i X^{(j)}_{i} \quad$ Moyenne arithmétique de $X^{(j)}$. \\
 
 Le tableau des données centré : $Y$ \\
 \medskip
-$\boxed{Y^{(j)}_i = X^{(j)}_i - \overline{X^{(j)}}}$
+$\boxed{Y^{(j)}_i = X^{(j)}_i - \overline{X}^{(j)}}$
 \end{flushleft}
 
 
 \subsubsection{Matrice de Variance - Covariance et Matrice de Corrélation}
-$\boxed{V = t_{YDY}} \quad$ Matrice de Variance-Covariance. \\
+\begin{definition}{Définition - Matrice de Variance-Covariance}
+On appelle matrice de variance-covariance : \Large $\boxed{V = \ ^tYDY}$
+\end{definition}
 
 \begin{flushleft}
-On note :
+Si on note $D_{\frac{1}{S}}$ la matrice diagonale des inverses des écarts-types : \\
 $
 D_{\frac{1}{S}} =
 \begin{pmatrix}
 \frac{1}{S_1} & & & & \text{\LARGE 0} \\
 & \frac{1}{S_2} & & & \\
 & & . & & \\
-& & & .  &\\
+& & & . &\\
 \text{\LARGE 0} & & & & \frac{1}{S_p}\\
 \end{pmatrix}
 $ \\
 \medskip
 $
 \begin{aligned}
-S_j &= \sqrt{V(X^{(j)})} \quad \text{écart type} \\
-&= \sqrt{\overset{n}{\underset{i = 0}{\sum}} p_i \left (Y^{(j)}_i \right )^2}
+\text{où } S_j &= \sqrt{V(X^{(j)})} \quad \text{écart type} \\
+&= \overset{n}{\underset{i = 1}{\sum}} p_i \left (Y^{(j)}_i \right )^2
 \end{aligned}
 $ \\
 \medskip
-$Z$ : tableau des données centré réduite. \\
+$
+\begin{aligned}
+V(X^{(j)}) &: \text{variance de } X^{(j)} \\
+S_j &: \text{écart-type de } X^{(j)}
+\end{aligned}
+$ \\
 \medskip
-$\boxed{Z^{(j)}_i = \frac{Y^{(j)}_i}{S_j}}$ \\
+On appelle la matrice des données centrées et réduites $Z$ telle que : $\boxed{Z^{(j)}_i = \frac{Y^{(j)}_i}{S_j}}$ \\
 \medskip
-$\boxed{Z = YD_{\frac{1}{S}}}$
+Matriciellement : $\boxed{Z = YD_{\frac{1}{S}}}$
+
+La matrice regroupant tous les coefficients de corrélation linéaire entre les $p$ variables est $R$ : \\
+$
+R = 
+\begin{pmatrix}
+1 & & & & l_{ij} \\
+& . & & & \\
+& & . & & \\
+& & & . & \\
+l_{ij} & & & & 1 \\
+\end{pmatrix}
+\text{ symétriques}
+$ \\
+\medskip
+$r_{ij} = l_{ij} = \frac{COV (X^{(i)}, X^{(j)})}{S_i S_j} \quad$ ($l_{ij}$ : coefficient de corrélation) \\
+où $COV (X^{(i)}, X^{(j)})$ : covariance \\
+$COV (X^{(i)}, X^{(j)}) = \overset{n}{\underset{k = 1}{\sum}} l_k . Y^{(i)}_k . Y^{(j)}_k \quad$ (produit scalaire des variables centrées) \\
+
+\begin{remarque}{Remarque}
+$
+\begin{aligned}
+R &= D_{\frac{1}{S}} V D_{\frac{1}{S}} \\
+&= D_{\frac{1}{S}} \ ^tYDY D_{\frac{1}{S}}
+\end{aligned} \\
+\Rightarrow \boxed{R = \ ^tZDZ}
+$
+\end{remarque}
 \end{flushleft}
+
+
+\subsection{Espace des individus}
+Chaque individus étant un vecteur défini par $p$ coordonnées est considéré comme un élément d'un espace vectoriel $F$ appelé l'espace des individus. \\
+Les $n$ individus forment alors un nuage de points dans $F$ et $g$ en est le barycentre (ou centre de gravité). \\
+On munit l'espace $F$ d'une métrique (distance) : \\
+$<e_i, e_j> = t_{e_i} M l_j \quad$ ($<x, y>$ : produit scalaire)
+où $M$ est une matrice S.D.P (Symétrique et Définie Positive). \\
+
+\begin{remarque}{Remarque}
+Si $M = I \quad$ ($I$ : Identité), on retrouve le produit scalaire usuel. \\
+Si $M = D_{\frac{1}{S^2}} = 
+\begin{pmatrix}
+\frac{1}{S^2_1} & & & & \text{\LARGE 0} \\
+& . & & & \\
+& & . & & \\
+& & & . & \\
+\text{\LARGE 0} & & & & \frac{1}{S^2_p} \\
+\end{pmatrix}
+$
+cela revient à diviser chaque caractère par son écart-type.
+\end{remarque}
+
+\begin{definition}{Définition - Inertie}
+On appelle inertie totale du nuage de points la moyenne pondérée des carrés des distances des points au centre de gravité : \\
+$
+\begin{aligned}
+I_g &= \overset{n}{\underset{i = 1}{\sum}} p_i \ ^t(e_i - g) M(e_i - g) \\
+&= \overset{n}{\underset{i = 1}{\sum}} p_i \|e_i - g\|^2 \\
+\end{aligned} \\
+$
+\end{definition}
+
+\begin{propriete}{Propriété - Inertie}
+On peut montrer que l'inertie du nuage est égale à le trace de la matrice MV : \\
+$\boxed{I_g = Trace (MV) = Trace (VM)}$
+\end{propriete}
+
+
+\subsection{Espace des variables}
+\begin{flushleft}
+On note $E$ : l'espace des variables
+$
+X^{(j)} =
+\begin{pmatrix}
+X^{(j)}_1 \\
+: \\
+X^{(j)}_n
+\end{pmatrix}
+$ \\
+On munit $E$ de la métrique $M = D \quad$ ($D$ : matrice de poids) \\
+
+$<X^{(j)}, X^{(k)}> = \ ^tX^{(j)} D X^{(k)}$ \\
+
+Si les variables sont centrées on a : \\
+$
+\begin{aligned}
+^t X^{(j)} D X^{(k)} &= \overset{n}{\underset{i = 1}{\sum}} p_i X^{(j)}_i X^{(k)}_i \\
+&= COV (X^{(j)}, X^{(k)})
+\end{aligned}
+$
+
+La norme de $X^{(j)} \quad$ (variable centrée) \\
+
+$
+\begin{aligned}
+\|X^{(j)}\|^2 &= <X^{(j)}, X^{(j)}> \\
+&= \overset{n}{\underset{i = 1}{\sum}} p_i \left (X^{(j)} \right )^2 \\
+&= S^2_j
+\end{aligned}
+$ \\
+$\Rightarrow \|X^{(j)}\| = S_j \quad$ (écart-type) \\
+On mesure l'angle entre 2 variables $X^{(j)}$ et $X^{(k)}$ (centrées) : \\
+$
+\begin{aligned}
+\cos (\theta_{jk}) &= \frac{<X^{(j)}, X^{(k)}>}{\|X^{(j)}\| \|X^{(k)}\|} \\
+&= \frac{COV (X^{(j)}, X^{(k)})}{S_j S_k} \\
+&= l_{ik}
+\end{aligned}
+$ \\
+On retrouve le coefficient de corrélation linéaire.
+\end{flushleft}
+
+
+\subsection{Variables engendrées par un tableau de données}
+(image : Numériser 55.jpeg)
+
+
+
+
+
+
+
 
 
 \subsection{Algorithme A.C.P. (Analyse Composante Principale)}
