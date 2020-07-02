@@ -46,7 +46,9 @@
 \newtcolorbox{remarque}[1]{colback=green!5!white,colframe=green!65!black,fonttitle=\bfseries,title=#1}
 \newtcolorbox{info}[1]{colback=white,colframe=blue!60!white,fonttitle=\bfseries,title=#1}
 \newtcolorbox{rappel}[1]{colback=white,colframe=red!60!white,fonttitle=\bfseries,title=#1}
+\newtcolorbox{theoreme}[1]{colback=white,colframe=red!90!white,fonttitle=\bfseries,title=#1}
 \newtcolorbox{propriete}[1]{colback=white,colframe=orange!70!white,fonttitle=\bfseries,title=#1}
+\newtcolorbox{proposition}[1]{colback=white,colframe=orange!50!white,fonttitle=\bfseries,title=#1}
 % === End Commandes ===
 
 \pagestyle{fancy}
@@ -1239,7 +1241,184 @@ On retrouve le coefficient de corrélation linéaire.
 
 
 \subsection{Variables engendrées par un tableau de données}
-(image : Numériser 55.jpeg)
+
+$A$ une variable $X^{(j)}$, on peut associer un axe de l'espace des individus $F$ et un vecteur de l'espace des variables et on peut également déduire de $X^{(1)}, X{(2)}, ..., X^{(j)}, ..., X^{(p)}$ de nouvelle variables par combinaison linéaire. \\
+Soit $\Delta$ un axe de $F$. $\Delta$ est engendré par un vecteur unitaire a $(\ ^t a M a = 1)$ et projection des individus sur $\Delta$ (projection M orthogonale).
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{schémas/projection.png}
+\end{center}
+
+$c_i = \ ^t a M e_i = \ ^t e_i Ma = <e_i, a>$ (produit scalaire) \\
+
+La liste des coordonnées $c_i$ des individues sur $\Delta$ forme uen nouvelle variable artificielle $C$.\\
+
+$C =
+\begin{pmatrix}
+C_1 \\
+C_2 \\
+: \\
+C_n \\
+\end{pmatrix}
+ = X Ma = Xu$ on pose $u = Ma$ : facteur. \\
+ $\Rightarrow C = Xu = \overset{p}{\underset{j = 1}{\sum}} u_j X^{(j)}$ \\
+ 
+ Donc le nouvelle variable $C$ est une combinaison linéaire de variables initiale. L'enssemble des variables $C$ que l'on peut engendrer par combinaison linéaire des vecteurs colonne de $X$ forme un s.e.v. (sous espace vectoriel) de E de dimension $\leqslant p$. \\
+ 
+\begin{remarque}{Remarque}
+Si $M = I \Rightarrow u = a$
+\end{remarque}
+
+On suppose que les variables sont centrées $(X = Y)$ pour simplifier.
+
+\begin{proposition}{Proposition}
+$\boxed{V(C) = \ ^t u Vu} \quad (\text{variance dec})$ \\
+
+\textbf{Démonstration :} \\
+$
+\begin{aligned}
+V(C) &= \ ^t CDC \\
+&= \ ^t (Xu) DXu \\
+&= \ ^t u \ ^t XDXu \quad (\ ^t XDX = V)
+\end{aligned}
+$ \\
+$\Rightarrow V(C) = \ ^t u Vu$
+\end{proposition}
+
+Le but de la méthode est d'obtenir une représentation approché du nuage des $n$ individus dans un s.e.v. de dimension faible ceci s'effectue par projection. Il faut déformer le moins possible les distances en projection ce qui signifie que l'inertie du nuage projeté sur le s.e.v. $F_k$ soit maximale. \\
+
+Soit $P$ : la projection M\_{}orthogonale sur le s.e.v. $F_k$. \\
+$Pe_i = f_i$ \\
+$P^2 = P et \ ^t PM = MP$ \\
+
+\begin{center}
+\includegraphics[width=0.7\textwidth]{schémas/projection2.png}
+\end{center}
+
+Le nuage projeté est associé au tableau : $X^t P$ \\
+car $f_i = P \cdot e_i \quad (\text{vecteur colonne}) \Rightarrow \ ^t f_i = \ ^t e_i \cdot \ ^t P \quad (\text{vecteur ligne})$. \\
+On détermine la matrice de variance-covariance du tableau $X \ ^t P$ : \\
+$
+\begin{aligned}
+\ ^t (X \ ^t P) D (X \ ^t P) \quad (\text{les var sont centrées}) &= P \ ^t XDX \ ^t P \\
+&= \boxed{P V \ ^t P}
+\end{aligned}
+$ \\
+
+On détermine l'inertie du nuage projeté : $Trace (PV \ ^t PM)$. \\
+
+$
+\begin{aligned}
+Tr(PV \ ^t PM) &= Tr(PVMP) \\
+&= Tr(VMP^2) \quad (\text{car } Tr(AB) = Tr(BA)) \\
+&= Tr(VMP)
+\end{aligned}
+$ \\
+
+Donc l'inertie du nuage projeté est $Trace(VMP)$. \\
+Le problème est donc de trouver $P$ : projection M\_{}orthogonale de rang $k$ maximisant la trace de $VMP$, ce qui déterminera $F_k$ (dim $F_k = k$).
+
+\begin{theoreme}{Théorème}
+Soit $F_k$ un s.e.v. portant l'inertie maximale, alors le s.e.v. de dimension $k + 1$ portant l'inertie maximale est la somme directe de $F_k$ et du s.e.v. de dimension 1 M\_{}orthogonal à $F_k$ portant l'inertie maximale. \\
+\begin{center}
+$\boxed{F_{k + 1} = F_k \oplus b \mathbb{R}} \quad (b\mathbb{R} \text{ est de dimention 1})$
+\end{center}
+\end{theoreme}
+
+Pour obtenir $F_k$ on pourra procéder de proche en proche en cherchant d'abord le s.e.v. de dimension 1 d'inertie maximal puis le s.e.v. de dimension 1 M\_{}orthogonal au premier d'inertie maximale. On cherche la droite de $\mathbb{R}^P$ passant par $g$, maximisant l'inertie du nuage projeté sur cette droite on rappelle la projection M\_{}orthogonale sur la droite dirigée par $a$: \\
+$P = a (\ ^t a Ma)^{-1} \ ^t a M$. \\
+
+Inertie du nuage projeté sur cette droite : \\
+$
+\begin{aligned}
+Tr(VMP) &= Tr(VM a (\ ^t a Ma)^{-1} \ ^t a M) \\
+&= \frac{1}{\ ^t a Ma} Tr(VMa \ ^t aM) \\
+&= \frac{1}{\ ^t a Ma} Tr(\ ^t a MVMa) \\
+&= \frac{\ ^t a MVMa}{\ ^t a Ma}
+\end{aligned}
+$ \\
+
+$\frac{d}{da} (\frac{\ ^t a MVMa}{\ ^t a Ma}) = 0 \quad (*)$ \\
+
+\begin{rappel}{Rappel}
+$\frac{d}{da} (\ ^t a Aa) = Aa + \ ^t A a \quad (\ ^t a Aa \rightarrow \text{forme quadratique})$ \\
+si $A$ est symétrique : $\boxed{\frac{d}{da} (\ ^t a Aa) = 2 Aa}$ \\
+$
+\begin{aligned}
+(*) &\Rightarrow \frac{(\ ^t a Ma) 2 MVMa - (\ ^t a MVMa) 2 Ma}{(\ ^t a Ma)^2} = 0 \\
+&\Rightarrow MVMa = (\frac{\ ^t a MVMa}{\ ^t aMa}) Ma \\
+&\Rightarrow VMa = (\frac{\ ^t a MVMa}{\ ^t a Ma}) a \\
+&\Rightarrow \boxed{VMa = \lambda a} \quad (\text{avec } \lambda = \frac{\ ^t a MVMa}{\ ^t a Ma})
+\end{aligned}
+$ \\
+\end{rappel}
+
+Donc $a$ est un vecteur propre de $VM$ associé à $\lambda$ (valeur propre), il faut aus $\lambda$ soit maximale.\\
+Donc le s.e.v. $F_k$ de dimension $k$ est engendré par les $k$ vecteurs propres de $VM$ associé aux $k$ plus grandes valeurs propres. \\
+On appelle composante principale : $\boxed{C^{(i)} = Yu^{(i)}} \quad u^{(i)} : \text{facteur}$ \\
+
+Si les variables initiales sont centrés alors $C^{(i)} = Xu^{(i)}$ et $\boxed{V(C^{(i)}) = \lambda_i} \quad \forall i$
+
+
+\subsection{Qualités des représentations sur les plans principaux}
+
+Le but de L'A.C.P. (Analyse Composante Principale) étant d'obtenir une représentation des individus dans un espace de dimension plus faible que $P$. Le critère le plus utilisé est celui du pourcentage d'inertie totale expliquée. On mesure la qualité de $F_k$ par : \\
+\begin{center}
+\LARGE
+$\frac{\lambda_1 + \lambda_2 + \cdots + \lambda_k}{\lambda_1 + \lambda_2 + \cdots + \lambda_p}$
+\end{center}
+
+\begin{flushleft}
+Inertie totale: $\lambda_1 + \lambda_2 + \cdots + \lambda_p = T_{tot}$ \\
+Si par exemple: $\frac{\lambda_1 + \lambda_2}{T_{tot}} = 90\%$ \\
+On conçoit qu'une représentation du nuage dans le plan des 2 premiers axes principaux sera très satisfaisante.
+\end{flushleft}
+
+
+\subsection{Corrélation entre composantes principales et variables initiales}
+\begin{flushleft}
+La méthode la plus naturelle pour donner une signification à une composante principale $C^{(i)}$ est de la relier aux variables principales $X^{(j)}$ (variables initiales) en calculant les coefficients de corrélation linéaire.
+
+\begin{center}
+\large
+$\rho (X^{(j)} , C^{(i)} )$
+\end{center}
+
+Et en s'intéressant aux plus forts coefficients en valeur absolue : \\
+\begin{center}
+$\boxed{\rho (X^{(j)}, C^{(i)}) = \frac{Cov (X^{(j)}, C^{(i)})}{\sigma (X^{(j)} \sigma (C^{(i)}))}}$
+\end{center}
+
+$Cov (X^{(j)}, C^{(i)}) = \langle Y^{(j)} | C^{(i)} \rangle$ \\
+
+Où $Y^{(j)} : $ variable centrée
+\end{flushleft}
+
+
+\subsection{Exercice 7 - A.C.P.}
+\begin{flushleft}
+Soit $X = 
+\begin{pmatrix}
+16 & 2 & 0 \\
+8 & 12 & 10 \\
+12 & 16 & 14 \\
+20 & 8 & 14 \\
+16 & 4 & 10 \\
+0 & 6 & 12 \\
+\end{pmatrix}
+$ \\
+
+On donne le même poids à tous les individues : $p_i = \frac{1}{6} \quad \forall i$ et $M = I_3$.
+\end{flushleft}
+
+
+\subsubsection{Calculer la moyenne des variables et le centre de gravité}
+\subsubsection{Donner la matrice $Y$}
+\subsubsection{Calculer la matrice de variance-covariance $V$}
+\subsubsection{Diagonaliser $MV = V$}
+\subsubsection{Calculer le pourcentage d'inertie}
+\subsubsection{Facteur principaux}
+\subsubsection{Déterminer les composantes principales et calculer les coefficients de corrélation}
 
 
 
@@ -1247,9 +1426,6 @@ On retrouve le coefficient de corrélation linéaire.
 
 
 
-
-
-\subsection{Algorithme A.C.P. (Analyse Composante Principale)}
 \subsection{Projection}
 
 
