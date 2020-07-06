@@ -1413,12 +1413,317 @@ On donne le même poids à tous les individues : $p_i = \frac{1}{6} \quad \foral
 
 
 \subsubsection{Calculer la moyenne des variables et le centre de gravité}
+
+$p_i = \frac{1}{6} \quad \forall i = 1, 2, 4, 5, 6$ et $M = I_3$ métrique poids de chaque individu. \\
+
+\begin{flushleft}
+\textbf{La moyenne des variables} \\
+$
+\begin{aligned}
+X^{(j)} &= \overset{6}{\underset{i = 1}{\sum}} P_i X_i^{(j)} = \frac{1}{6} \overset{6}{\underset{i = 1}{\sum}} x_i^{(j)} \\
+\Rightarrow X^{(1)} &= \overset{6}{\underset{i = 1}{\sum}} P_i X_i^{(1)} = \frac{1}{6} \overset{6}{\underset{i = 1}{\sum}} x_i^{(i)} = \frac{72}{6} = 12 \\
+\Rightarrow X^{(2)} &= \frac{1}{6} \overset{6}{\underset{i = 1}{\sum}} x_i^{(2)} = \frac{1}{6} 48 = 8 \\
+\Rightarrow X^{(3)} &= \frac{1}{6} \overset{6}{\underset{i = 1}{\sum}} x_i^{(3)} = \frac{60}{6} = 10 \\
+\end{aligned}
+$ \\
+
+Donc $X^{(1)} = 12, X^{(2)} = 8, X^{(3)} = 10$. \\
+Le centre de gravité du nuage formé par les 3 individu : $tg = (12, 8, 10)$
+\end{flushleft}
+
+
 \subsubsection{Donner la matrice $Y$}
+\begin{center}
+$Y = 
+\begin{pmatrix}
+4 & -6 & -10 \\
+-4 & 4 & 0 \\
+0 & 8 & 4 \\
+8 & 0 & 4 \\
+4 & -4 & 0 \\
+-12 & -2 & 2 \\
+\end{pmatrix}
+$ \\
+\end{center}
+
+
 \subsubsection{Calculer la matrice de variance-covariance $V$}
+$V = \ ^t YDY$ avec $D = \frac{1}{6} T_6$ \\
+\begin{center}
+{\Large
+$\Rightarrow V = \frac{1^t}{6} YY = 
+\begin{pmatrix}
+\frac{128}{3} & \frac{-16}{3} & \frac{-16}{3} \\
+\frac{-16}{3} & \frac{68}{3} & \frac{44}{3} \\
+\frac{-16}{3} & \frac{44}{3} & \frac{68}{3} \\
+\end{pmatrix}
+$} \\
+\end{center}
+
+
 \subsubsection{Diagonaliser $MV = V$}
+\begin{flushleft}
+$M = T_3$ : Métrique dans l'espace des individus. \\
+$P_V(\lambda) = det(V - \lambda I_3)$ : polynôme caractéristique de $V$. \\
+
+\begin{center}
+{\Large
+$P_V(\lambda) =
+\begin{pmatrix}
+\frac{128}{3} - \lambda & \frac{-16}{3} & \frac{-16}{3} \\
+\frac{-16}{3} & \frac{68}{3} - \lambda & \frac{44}{3} \\
+\frac{-16}{3} & \frac{44}{3} & \frac{68}{3} - \lambda \\
+\end{pmatrix}
+$} \\
+\end{center}
+
+$C_1 \rightarrow C_1 + C_2 + C_3$ \\
+
+\begin{center}
+{\Large
+$P_V(X) = (32 - \lambda)
+\begin{pmatrix}
+1 & \frac{-16}{3} & \frac{-16}{3} \\
+1 & \frac{68}{3} - \lambda & \frac{44}{3} \\
+1 & \frac{44}{3} & \frac{68}{3} - \lambda \\
+\end{pmatrix}
+$}
+\end{center}
+
+Par linéarité \\
+$L_2 \rightarrow L_2 - L_1$ et $L_3 \rightarrow L_3 - L_1$
+
+\begin{center}
+{\Large
+$P_V(X) = (32 - \lambda)
+\begin{pmatrix}
+1 & \frac{-16}{3} & \frac{-16}{3} \\
+0 & 28 - \lambda & 20 \\
+0 & 20 & 28 - \lambda \\
+\end{pmatrix}
+$}
+\end{center}
+
+$
+\begin{aligned}
+P_V(X) &= (32 - \lambda)((28 - \lambda)^2 - 20^2) \\
+&= (32 - \lambda)(28 - \lambda - 20)(28 - \lambda + 20) \\
+&= (32 - \lambda)(8 - \lambda)(48 - \lambda)
+\end{aligned}
+$ \\
+\medskip
+Les valeurs propres de $V : \lambda_1 = 48, \lambda_2 = 32, \lambda_3 = 8$ (dans le sens décroissant).
+\end{flushleft}
+
+
 \subsubsection{Calculer le pourcentage d'inertie}
+\begin{flushleft}
+Le 1\up{er} axe : $\frac{\lambda_1}{\lambda_1 + \lambda_2 + \lambda_3} = \frac{48}{88} = 0,54$ \\
+Le 2\up{ème} axe : $\frac{\lambda_2}{\lambda_1 + \lambda_2 + \lambda_3} = \frac{32}{88} = 0,36$ \\
+Le 3\up{ème} axe : $\frac{\lambda_3}{\lambda_1 + \lambda_2 + \lambda_3} = \frac{8}{88} = 0,09$ \\
+\end{flushleft}
+
+\begin{flushleft}
+L'inertie portée par le plan principal
+\end{flushleft}
+\begin{center}
+$\frac{\lambda_1 + \lambda_2}{\lambda_1 + \lambda_2 + \lambda_3} = \frac{48 + 32}{88} = 90\%$
+\end{center}
+
+\begin{flushleft}
+L'inertie est maximale. \\
+
+On retiendra que 2 axes principaux (facteur principaux). Ici facteur principaux $\equiv$ axes principaux car $M = I_3 (u = a)$.
+\end{flushleft}
+
+
 \subsubsection{Facteur principaux}
+Les facteurs principaux sont les 2 vecteurs propres associés aux valeurs propres $\lambda_1 = 48$ et $\lambda_2 = 32$.
+
+\begin{center}
+$E_{48} = Ker(V - 48I_3)$ \\
+
+$\forall u =
+\begin{pmatrix}
+X \\
+Y \\
+Z \\
+\end{pmatrix}
+\in E_{48}$
+\end{center}
+
+\begin{center}
+$ \Leftrightarrow (V - 48I_3)
+\begin{pmatrix}
+X \\
+Y \\
+Z \\
+\end{pmatrix}
+= 0$
+\end{center}
+
+\begin{center}
+$
+\Leftrightarrow
+\left \{
+\begin{aligned}
+- \frac{16}{3}x - \frac{16}{3}y - \frac{16}{3}z &= 0 \\
+- \frac{16}{3}x - \frac{76}{3}y - \frac{44}{3}z &= 0 \\
+- \frac{16}{3}x + \frac{66}{3}y - \frac{76}{3}z &= 0 \\
+\end{aligned}
+\right .
+$
+\end{center}
+
+\begin{center}
+$
+\forall v \in Ker(V - 48I_3) \Leftrightarrow
+\left \{
+\begin{aligned}
+x + y + z &= 0 \\
+-16x - 76y + 44z &= 0 \\
+-16x + 44y - 76z &= 0 \\
+\end{aligned}
+\right .
+$
+\end{center}
+
+\begin{center}
+$
+\begin{aligned}
+2 + 3 & \Rightarrow -12y + 12z = 0 \\
+& \Rightarrow \boxed{y = z} \\
+1 & \Rightarrow \boxed{x = -2y} \\
+\end{aligned}
+$ \\
+\end{center}
+
+\begin{flushleft}
+Donc $E_{48} = Vect
+\begin{pmatrix}
+2 \\
+-1 \\
+-1 \\
+\end{pmatrix}
+$
+\end{flushleft}
+
+\begin{flushleft}
+Le 1\up{er} facteur principal est
+\end{flushleft}
+\begin{center}
+$
+u^{(1)} = \frac{1}{\sqrt{6}}
+\begin{pmatrix}
+2 \\
+-1 \\
+-1 \\
+\end{pmatrix}
+$
+\end{center}
+
+\begin{flushleft}
+Où $\sqrt{6} = $ la norme du vecteur
+$
+\begin{pmatrix}
+2 \\
+-1 \\
+-1 \\
+\end{pmatrix}
+$
+\end{flushleft}
+
+\begin{center}
+$E_{32} = Ker(V - 32I_3)$
+\end{center}
+
+\begin{center}
+$\forall u = 
+\begin{pmatrix}
+X \\
+Y \\
+Z \\
+\end{pmatrix}
+\in E_ {32}
+$
+\end{center}
+
+\begin{center}
+$\Leftrightarrow (V - 32I_3)
+\begin{pmatrix}
+X \\
+Y \\
+Z \\
+\end{pmatrix}
+ = 0
+$
+\end{center}
+
+\begin{center}
+$
+\Leftrightarrow
+\left \{
+\begin{aligned}
+32x - 16y - 16z &= 0 \\
+-16x - 28y - 44z &= 0 \\
+-16x + 44y - 28z &= 0 \\
+\end{aligned}
+\right .
+$
+\end{center}
+
+\begin{center}
+$
+\Leftrightarrow
+\left \{
+\begin{aligned}
+2x - y - z &= 0 \\
+-4x - 7y - 11z &= 0 \\
+-4x + 11y - 72 &= 0 \\
+\end{aligned}
+\right .
+$
+\end{center}
+
+\begin{center}
+$2 - 3 \Rightarrow - 18y + 18z = 0 \Rightarrow \boxed{y = 7}$ \\
+$1 \Rightarrow \boxed{x = y}$
+\end{center}
+
+\begin{center}
+$
+E_{32} = Vect
+\begin{pmatrix}
+1 \\
+1 \\
+1 \\
+\end{pmatrix}
+$
+\end{center}
+
+\begin{flushleft}
+Le 2\up{ème} facteur principal est
+\end{flushleft}
+
+\begin{center}
+$
+u^{(2)} = \frac{1}{\sqrt{3}}
+\begin{pmatrix}
+1 \\
+1 \\
+1 \\
+\end{pmatrix}
+$
+\end{center}
+
+\begin{flushleft}
+$(u^{(1)}, u^{(2)})$ est une base orthonormée.
+\end{flushleft}
+
+
 \subsubsection{Déterminer les composantes principales et calculer les coefficients de corrélation}
+
+
 
 
 
