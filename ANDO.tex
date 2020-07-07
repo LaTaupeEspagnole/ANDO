@@ -57,6 +57,7 @@
 \rhead{\nomprofesseur}
 \rfoot{Page \thepage{} / \pageref{LastPage}}
 \cfoot{\date{\today}}
+\lfoot{Sébastien Goubeau}
 
 \begin{document}
 
@@ -1722,16 +1723,104 @@ $(u^{(1)}, u^{(2)})$ est une base orthonormée.
 
 
 \subsubsection{Déterminer les composantes principales et calculer les coefficients de corrélation}
+\begin{flushleft}
+$C^{(1)} = Yu^{(1)}$ La 1\up{ère} composante principale. \\
+Où $Y$ : la matrice des données centrées.
+\end{flushleft}
+
+\begin{flushleft}
+$
+C^{(1)} =
+\begin{pmatrix}
+4\sqrt{6} \\
+-2\sqrt{6} \\
+-2\sqrt{6} \\
+2\sqrt{6} \\
+2\sqrt{6} \\
+-4\sqrt{6} \\
+\end{pmatrix}
+\text{ et } C^{(2)} = Yu^{(2)}
+$
+\end{flushleft}
+
+\begin{flushleft}
+$
+C^{(2)} =
+\begin{pmatrix}
+-4\sqrt{3} \\
+0 \\
+4\sqrt{3} \\
+4\sqrt{3} \\
+0 \\
+-4\sqrt{3} \\
+\end{pmatrix}
+$
+la 2\up{ème} composante principale
+\end{flushleft}
+
+\begin{remarque}{Remarque}
+Les composantes principales sont centrées.
+\end{remarque}
+
+\subsection{Calcul des coefficients de corrélation}
+\begin{center}
+$\rho (X^{(1)}, C^{(1)}) = \frac{Cov(X^{(1)}, C^{(1)})}{\sigma (X^{(1)} \sigma (C^{(1)}))}$
+\end{center}
+
+\begin{flushleft}
+$Cov (X^{(1)}, C^{(1)}) = \langle Y^{(1)} | C^{(1)} \rangle \quad$ produit scalaire
+\end{flushleft}
+
+\begin{center}
+$\langle Y^{(1)} | C^{(1)} \rangle = \frac{1}{6} (16 \sqrt{6} + 8 \sqrt{6} + 16 \sqrt{6} + 8 \sqrt{6} + 48 \sqrt{6})$ \\
+$\langle Y^{(1)} | C^{(1)} \rangle = \frac{96 \sqrt{6}}{6} = 16 \sqrt{6}$ \\
+$Cov (X^{(1)}, C^{(1)}) = 16 \sqrt{6}$
+\end{center}
+
+\begin{center}
+$\sigma (C^{(1)}) = \| C^{(1)} \| = \sqrt{\frac{1}{6} (96 + 24 + 24 + 24 + 24 + 96)}$ \\
+$\sigma (C^{(1)}) = 4 \sqrt{3}$
+\end{center}
+
+\begin{center}
+$\sigma (X^{(1)}) = \sqrt{X^{(1)}} = \sqrt{\frac{128}{3}}$
+\end{center}
+
+Les variables de $X^{(1)}, X^{(2)}, X^{(3)}$ sont situées sur la diagonale de $V$.
+
+\begin{center}
+$\rho (X^{(1)}, C^{(1)}) = \frac{16 \times \sqrt{6}}{\sqrt{\frac{128}{3}} \times 4 \sqrt{3}} = \boxed{\frac{\sqrt{3}}{2}}$
+\end{center}
+
+\begin{center}
+$Cov (X^{(1)}, C^{(2)}) = \frac{32 \sqrt{3}}{3}$
+\end{center}
+
+\begin{center}
+$\sigma (C^{(2)}) = \sqrt{32} = 4 \sqrt{2}$
+\end{center}
+
+\begin{center}
+$\rho (X^{(1)}, C^{(2)}) = \frac{32 \frac{\sqrt{3}}{3}}{\sqrt{\frac{128}{3}} \times 4 \sqrt{3}} = \frac{1}{2}$ \\
+\end{center}
+
+On calcule de la même manière : $\rho (X^{(2)}, C^{(1)}), \rho (X^{(2)}, C^{(2)}), \rho (X^{(3)}, C^{(1)})$ et $\rho (X^{(3)}, C^{(2)})$. On peut faire un tableau pour les corrélations : \\
+
+\begin{center}
+\Large
+\begin{tabular}{l|c|c|}
+& $C^{(1)}$ & $C^{(2)}$ \\
+\hline
+$X^{(1)}$ & $\frac{\sqrt{3}}{2} = 0,87$ & $\frac{1}{2} = 0,5$ \\
+$X^{(2)}$ & $- \sqrt{\frac{6}{17}} = - 0,59$ & $\frac{2 \sqrt{34}}{17} = 0,69$ \\
+$X^{(3)}$ & $- \sqrt{\frac{6}{17}} = - 0,59$ & $\frac{2 \sqrt{34}}{17} = 0,69$ \\
+\end{tabular}
+\end{center}
 
 
 
 
 
-
-
-
-
-\subsection{Projection}
 
 
 \end{document}
